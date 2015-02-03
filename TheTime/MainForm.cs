@@ -76,7 +76,8 @@ namespace TheTime
                 dataGridView2.Rows.Add();
                 dataGridView2.Rows[i].Height = 34;
                 dataGridView2.Rows[i].Cells[0].Value = tag1.dailyList[i+day*4].temperature;
-                Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(tag1.dailyList[i + day * 4].symbol);
+                string buf = tag1.dailyList[i + day * 4].symbol.Replace("-","0").Replace("+","1");
+                Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(buf);
                 dataGridView2.Rows[i].Cells[1].Value = myIcon;
                 dataGridView2.Rows[i].Cells[2].Value = tag1.dailyList[i + day * 4].windSpeed;
                 dataGridView2.Rows[i].Cells[3].Value = tag1.dailyList[i + day * 4].pressure;
@@ -142,7 +143,9 @@ namespace TheTime
             tag1 = GetForecat();
             
             linkLabel2.Text = DateTime.Parse(Convert.ToString(tag1.hourlyList[0].periodDate)).ToLongDateString();
-
+            monthCalendar1.TodayDate = tag1.hourlyList[0].periodDate;
+            
+          //  MessageBox.Show(Convert.ToString(monthCalendar1.TodayDate), Convert.ToString(tag1.hourlyList[0].periodDate));
             for (int i = 0; i < 8; i++)
             {
                 int t = 3*i;
@@ -190,35 +193,38 @@ GroupBox[] tb = new GroupBox[Kol];
                 mor[i * 2+1] = new System.Windows.Forms.Label();
                 tem[i * 2] = new System.Windows.Forms.Label();
                 tem[i * 2+1] = new System.Windows.Forms.Label();
-                
-                tb[i].Location = new System.Drawing.Point(6 + 85*i, 7);
+                if (i<5)
+                tb[i].Location = new System.Drawing.Point(10 + 80*i, 30);
+                else
+                tb[i].Location = new System.Drawing.Point((10 + 80 * i)-400, 132);
                 tb[i].Name = "groupboxes" + i.ToString();
-                tb[i].Size = new System.Drawing.Size(81, 53);
+                tb[i].Size = new System.Drawing.Size(75, 77);
                 tb[i].TabIndex = i;
                 tb[i].Text = DateTime.Parse(Convert.ToString(tag1.tenDaysList[i*2].periodDate)).ToShortDateString();
                 
                 mor[i*2].Text = "День";
-        //        mor[i*2].Location = new System.Drawing.Point(30 + 85 * i, 16);
+                mor[i*2].Location = new System.Drawing.Point(30, 16);
                 mor[i * 2].Size = new System.Drawing.Size(34, 13);
                 
                 mor[i * 2+1].Text = "Ночь";
-      //          mor[i * 2+1].Location = new System.Drawing.Point(31 + 85 * i, 32);
+                mor[i * 2+1].Location = new System.Drawing.Point(32, 43);
                 mor[i * 2+1].Size = new System.Drawing.Size(32, 13);
 
                 tem[i * 2].Text = tag1.tenDaysList[i].temperature;
-//                tem[i * 2].Location = new System.Drawing.Point(64 + 85 * i, 17);
+                tem[i * 2].Location = new System.Drawing.Point(36, 29);
                 tem[i * 2].Size = new System.Drawing.Size(30, 13);
 
                 tem[i*2+1].Text = tag1.tenDaysList[i+1].temperature;
-  //              tem[i * 2+1].Location = new System.Drawing.Point(63 + 85 * i, 33);
+                tem[i * 2+1].Location = new System.Drawing.Point(36, 59);
                 tem[i * 2+1].Size = new System.Drawing.Size(30, 13);
 
                 tb1[i] = new System.Windows.Forms.PictureBox();
-    //            tb1[i].Location = new System.Drawing.Point(2 + 85 * i, 19);
+                tb1[i].Location = new System.Drawing.Point(2,28);
                 tb1[i].Name = "pictureboxes" + i.ToString();
-                tb1[i].Size = new System.Drawing.Size(28, 28);
+                tb1[i].Size = new System.Drawing.Size(28, 40);
                 Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject("ovc");
                 tb1[i].Image = myIcon;
+                tb1[i].SizeMode = PictureBoxSizeMode.StretchImage;
 
                 tabPage3.Controls.Add(tb[i]);
                 tb[i].Controls.Add(tem[i * 2]);
@@ -379,12 +385,14 @@ GroupBox[] tb = new GroupBox[Kol];
         {
             if (monthCalendar1.Visible == false)
             {
+                
                 monthCalendar1.Visible = true;
                 monthCalendar1.MinDate = monthCalendar1.TodayDate;
-                monthCalendar1.MaxDate = monthCalendar1.TodayDate.AddDays(10);
+                monthCalendar1.MaxDate = monthCalendar1.TodayDate.AddDays(9);
             }
             else
             {
+                linkLabel2.Text = DateTime.Parse(Convert.ToString(monthCalendar1.SelectionStart)).ToLongDateString();
                 monthCalendar1.Visible = false;
                 GridView2(monthCalendar1.SelectionStart);
                 //MessageBox.Show(Convert.ToString(monthCalendar1.SelectionStart));
@@ -394,6 +402,16 @@ GroupBox[] tb = new GroupBox[Kol];
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            
+                monthCalendar1.Visible = false;
+                GridView2(monthCalendar1.SelectionStart);
+                linkLabel2.Text = DateTime.Parse(Convert.ToString(monthCalendar1.SelectionStart)).ToLongDateString();
+
+            
         }
     }
 }

@@ -1,0 +1,31 @@
+c:\users\владимир\documents\visual studio 2010\Projects\TheTime\TheTime\bin\Debug\TheTime.exe
+c:\users\владимир\documents\visual studio 2010\Projects\TheTime\TheTime\bin\Debug\TheTime.pdb
+c:\users\владимир\documents\visual studio 2010\Projects\TheTime\TheTime\obj\x86\Debug\TheTime.Form1.resources
+c:\users\владимир\documents\visual studio 2010\Projects\TheTime\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
+c:\users\владимир\documents\visual studio 2010\Projects\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
+c:\users\владимир\documents\visual studio 2010\Projects\TheTime\TheTime\obj\x86\Debug\TheTime.exe
+c:\users\владимир\documents\visual studio 2010\Projects\TheTime\TheTime\obj\x86\Debug\TheTime.pdb
+C:\Users\Maria\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.exe
+C:\Users\Maria\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.pdb
+C:\Users\Maria\Desktop\TheTime\TheTime\TheTime\bin\Debug\TheTime.exe
+C:\Users\Maria\Desktop\TheTime\TheTime\TheTime\bin\Debug\TheTime.pdb
+C:\Users\Maria\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.csprojResolveAssemblyReference.cache
+C:\Users\Maria\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.Form1.resources
+C:\Users\Maria\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
+C:\Users\Maria\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
+C:\Users\Владимир\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.exe
+C:\Users\Владимир\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.pdb
+C:\Users\Владимир\Desktop\TheTime\TheTime\TheTime\bin\Debug\TheTime.exe
+C:\Users\Владимир\Desktop\TheTime\TheTime\TheTime\bin\Debug\TheTime.pdb
+C:\Users\Владимир\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.csprojResolveAssemblyReference.cache
+C:\Users\Владимир\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.Form1.resources
+C:\Users\Владимир\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
+C:\Users\Владимир\Desktop\TheTime\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
+C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\obj\x86\Debug\TheTime.exe
+C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\obj\x86\Debug\TheTime.pdb
+C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\bin\Debug\TheTime.exe
+C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\bin\Debug\TheTime.pdb
+C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\obj\x86\Debug\TheTime.csprojResolveAssemblyReference.cache
+C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\obj\x86\Debug\TheTime.Form1.resources
+C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
+C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache

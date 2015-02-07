@@ -104,5 +104,23 @@ namespace TheTime
                 comboBox3.Visible = false;
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string city = "";
+            string country = comboBox1.Text;
+            if (comboBox3.Visible == true)
+            {
+                city = comboBox3.Text;
+            }
+            else
+            {
+                city = comboBox2.Text;
+            }
+
+            OpenweathermapAPIWorker worker = new OpenweathermapAPIWorker();
+            worker.GetWeather(city, country);
+
+        }
     }
 }

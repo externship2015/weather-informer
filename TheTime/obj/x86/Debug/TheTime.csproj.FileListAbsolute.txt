@@ -38,3 +38,5 @@ D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Form1.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.OWM.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
+D:\Diplom\TheTime\TheTime\bin\Debug\Newtonsoft.Json.dll
+D:\Diplom\TheTime\TheTime\bin\Debug\Newtonsoft.Json.xml

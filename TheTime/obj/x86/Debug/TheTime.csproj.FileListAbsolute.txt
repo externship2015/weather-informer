@@ -29,3 +29,12 @@ C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\obj\x86\Debug\TheTime.csprojReso
 C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\obj\x86\Debug\TheTime.Form1.resources
 C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 C:\Users\Maria\Desktop\TheTime2\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.exe
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.pdb
+D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.exe
+D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.pdb
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.csprojResolveAssemblyReference.cache
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Form1.resources
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.OWM.resources
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache

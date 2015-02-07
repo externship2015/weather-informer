@@ -6,33 +6,29 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace TheTime
 {
-    public partial class Form1 : Form
+    public partial class OWM : Form
     {
+
         WeatherWorker ww = new WeatherWorker();
         List<Cities> listOfCities;
-        List<FactWeather> listOfFacts;
-
-        public Form1()
-        {            
+        public OWM()
+        {
             InitializeComponent();
-            listOfCities = ww.GetListOfCities();   
+            listOfCities = ww.GetListOfCities();  
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void OWM_Load(object sender, EventArgs e)
         {
-           // comboBox3.Visible = false;        
-          
             List<string> countries = new List<string>();
-            
+
             var custs = (from customer in listOfCities
-                         select new {customer.country}).Distinct();
-            
+                         select new { customer.country }).Distinct();
+
             foreach (var item in custs)
-            {                
+            {
                 comboBox1.Items.Add(item.country);
             }
         }
@@ -46,6 +42,7 @@ namespace TheTime
         {
             FillComboBox3();
         }
+
         public void FillComboBox2()
         {
             comboBox3.Items.Clear();
@@ -107,78 +104,5 @@ namespace TheTime
                 comboBox3.Visible = false;
             }
         }
-
-        // Иконки в трее
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void notifyIcon1_Click(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Minimized)
-            {
-                this.WindowState = FormWindowState.Normal;
-                this.ShowInTaskbar = true;
-                notifyIcon1.Visible = false;
-            } 
-        }
-
-        private void Form1_Deactivate_1(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Minimized)
-            {
-                notifyIcon1.ShowBalloonTip(500, "Сообщение", "Я свернулась:)", ToolTipIcon.Warning);
-
-                notifyIcon1.Text = "+1";
-                this.ShowInTaskbar = false;
-                notifyIcon1.Visible = true;
-            }
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            groupBox1.Visible = true;
-            string id = ww.GetCityIdString(comboBox1.Text, comboBox2.Text, comboBox3.Text, listOfCities);
-            string ss = "";
-            listOfFacts = ww.GetFactWeather(id);
-
-            Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(listOfFacts[0].pic);  
-            pictureBox1.Image = myIcon;
-
-            label1.Text = listOfFacts[0].desc;
-            label2.Text = listOfFacts[0].temp;
-
-            int a = 0;
-        }
-
-        private void comboBox1_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                FillComboBox2();
-            }
-
-            catch (Exception ex)
-            { }
-        }
-
-        private void comboBox2_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                FillComboBox3();
-            }
-
-            catch (Exception ex)
-            { }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            OWM f2 = new OWM();
-            f2.Show();
-        }
-
     }
 }

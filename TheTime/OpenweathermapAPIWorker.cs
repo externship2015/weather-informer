@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Net;
-using Newtonsoft.Json;
 using System.Web;
 using System.Xml.Linq;
 
@@ -13,7 +12,7 @@ namespace TheTime
     class OpenweathermapAPIWorker
     {
         System.Xml.XmlNodeList forecastsList;
-        public void GetWeather(string city, string country)
+        public List<OpenWeatherForecast> GetWeather(string city, string country)
         {
 
             //using (WebClient webClient = new System.Net.WebClient())
@@ -24,7 +23,7 @@ namespace TheTime
             //    Dictionary<string, string> dict = ParseJson(valueOriginal);
             //}
 
-            // получаем прогноз на неделю с сервера
+            // получаем прогноз на 10 дней вперед с сервера
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load("http://api.openweathermap.org/data/2.5/forecast?&q="+city+","+country+"&mode=xml&units=metric&cnt=10&lang=ru");
 
@@ -68,7 +67,7 @@ namespace TheTime
                     switch (weatherPar[k].Name) 
                     { 
                         case "symbol":
-                            symbol = weatherPar[k].Attributes.GetNamedItem("var").Value;
+                            symbol = "_"+weatherPar[k].Attributes.GetNamedItem("var").Value;
                             break;
                         case "precipitation":
                             precipitation = "123";
@@ -110,18 +109,10 @@ namespace TheTime
                     clouds = clouds
 
                 });
-               
-
-                int a = 0;
             }
-            //var users = (from entry in xDoc.ChildNodes("user")
-            //             select new
-            //             {
-            //                 UserName = entry.Attribute("Name").Value
-            //             }).ToList();
 
 
-            int t = 0;
+            return list;
         }
 
 

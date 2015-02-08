@@ -14,6 +14,9 @@ namespace TheTime
 
         WeatherWorker ww = new WeatherWorker();
         List<Cities> listOfCities;
+
+        string CurIcon = "";
+        string CurTemp = "";
         public OWM()
         {
             InitializeComponent();
@@ -119,8 +122,55 @@ namespace TheTime
             }
 
             OpenweathermapAPIWorker worker = new OpenweathermapAPIWorker();
-            worker.GetWeather(city, country);
+            List<OpenWeatherForecast>  CurWeather = worker.GetWeather(city, country);
 
+            // CurWeather[0];
+
+            Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(CurWeather[0].symbol);
+            pictureBox1.Image = myIcon;
+
+            label1.Text = CurWeather[0].temperature;
+            label2.Text = "Давление: " + CurWeather[0].pressure;
+            label3.Text = "Влажность воздуха: " + CurWeather[0].humidity+"%";
+
+            CurIcon = CurWeather[0].symbol;
+            CurTemp = CurWeather[0].temperature;
+           
+            
+            
+            //pictureBox1.Image.Dispose();
+            pictureBox1.Image = myIcon;
+
+        }
+
+        private void OWM_Deactivate(object sender, EventArgs e)
+        {
+
+            Bitmap bmp = new Bitmap((Image)TheTime.Properties.Resources.ResourceManager.GetObject(CurIcon));
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.DrawString("-11", this.Font, Brushes.Blue, (bmp.Width / 3) * 2, (bmp.Height / 3) * 2);
+            }
+
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                notifyIcon1.ShowBalloonTip(500, "Сообщение", "Я свернулась:)", ToolTipIcon.Warning);
+                notifyIcon1.Icon = Icon.FromHandle(bmp.GetHicon());
+                notifyIcon1.Text = CurTemp;
+                this.ShowInTaskbar = false;
+                notifyIcon1.Visible = true;
+            }
+        }
+
+        private void notifyIcon1_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+            } 
         }
     }
 }

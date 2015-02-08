@@ -38,3 +38,8 @@ D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Form1.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.OWM.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
+D:\Diplom\TheTime\TheTime\bin\Debug\DataSet.mdf
+D:\Diplom\TheTime\TheTime\bin\Debug\DataSet_log.ldf
+D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.exe.config
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.MainForm.resources
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Settings.resources

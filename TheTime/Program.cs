@@ -7,6 +7,8 @@ namespace TheTime
 {
     static class Program
     {
+
+        public static DataWorkerDataContext data = new DataWorkerDataContext();
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -15,7 +17,7 @@ namespace TheTime
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }

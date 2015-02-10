@@ -33,21 +33,27 @@ namespace TheTime
             listOfCities = ww.GetListOfCities(); 
 
 
-            var sets = from c in Program.data.AppSettings select c;
-            if (sets.Count() > 0)
-            {
-                CurSity = sets.First().curCity;
-                CurCountry = sets.First().curCountry;
-                CurRegion = sets.First().curRegion;
-                service = sets.First().service;
-                cnt = (int)sets.First().forecastDaysCount;
-            }
-            else
-            {
-                Settings form = new Settings();
-                form.Show();
-                MessageBox.Show("Заполните форму!");
-            }
+            //var sets = from c in Program.data.AppSettings select c;
+            //if (sets.Count() > 0)
+            //{
+            //    CurSity = sets.First().curCity;
+            //    CurCountry = sets.First().curCountry;
+            //    CurRegion = sets.First().curRegion;
+            //    service = sets.First().service;
+            //    cnt = (int)sets.First().forecastDaysCount;
+            //}
+            //else
+            //{
+            //    Settings form = new Settings();
+            //    form.Show();
+            //    MessageBox.Show("Заполните форму!");
+            //}
+
+            CurSity = "Ульяновск";
+            CurCountry = "Россия";
+            CurRegion = "Ульяновская область";
+            service = "owm";
+            //    cnt = (int)sets.First().forecastDaysCount;
 
 
             switch (service)
@@ -65,20 +71,20 @@ namespace TheTime
         public void OpenWeather() 
         {
             OpenweathermapAPIWorker worker = new OpenweathermapAPIWorker();
-            List<OpenWeatherForecast> CurWeather = worker.GetWeather(CurSity, CurCountry);
+            //List<OpenWeatherForecast> CurWeather = worker.GetWeather(CurSity, CurCountry);
+            worker.GetWeather(CurSity, CurRegion, CurCountry);
 
+            //Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(CurWeather[0].symbol);
+            //pictureBox1.Image = myIcon;
 
-            Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(CurWeather[0].symbol);
-            pictureBox1.Image = myIcon;
+            //label1.Text = CurWeather[0].temperature;
+            //label2.Text = "Давление: " + CurWeather[0].pressure;
+            //label3.Text = "Влажность воздуха: " + CurWeather[0].humidity + "%";
 
-            label1.Text = CurWeather[0].temperature;
-            label2.Text = "Давление: " + CurWeather[0].pressure;
-            label3.Text = "Влажность воздуха: " + CurWeather[0].humidity + "%";
+            //CurIcon = CurWeather[0].symbol;
+            //CurTemp = CurWeather[0].temperature;
 
-            CurIcon = CurWeather[0].symbol;
-            CurTemp = CurWeather[0].temperature;
-
-            pictureBox1.Image = myIcon;
+            //pictureBox1.Image = myIcon;
         }
 
         public void Yandex() 

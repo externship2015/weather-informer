@@ -55,5 +55,15 @@ namespace TheTime.Properties {
                 return ((string)(this["DataSetConnectionString2"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\\WeatherBase.mdb")]
+        public string WeatherBaseConnectionString {
+            get {
+                return ((string)(this["WeatherBaseConnectionString"]));
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DataSet" Class="DataWorkerDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\DataSet.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="TheTime.Properties.Settings" SettingsPropertyName="DataSetConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\DataSet.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="TheTime.Properties.Settings" SettingsPropertyName="DataSetConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.OWMForecast" Member="OWMForecasts">
     <Type Name="OWMForecast">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

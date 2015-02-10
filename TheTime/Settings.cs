@@ -72,11 +72,11 @@ namespace TheTime
             List<string> city = new List<string>();
 
             var custs = (from customer in listOfCities
-                         select new { customer.citName }).Distinct();
-
+                         select new { customer.part }).Distinct();
+            custs = custs.OrderBy(customer => customer.part);
             foreach (var item in custs)
             {
-                comboBox2.Items.Add(item.citName);
+                comboBox2.Items.Add(item.part);
             }
         }
 

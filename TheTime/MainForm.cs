@@ -52,9 +52,9 @@ namespace TheTime
             CurSity = "Ульяновск";
             CurCountry = "Россия";
             CurRegion = "Ульяновская область";
-            service = "owm";
-            //    cnt = (int)sets.First().forecastDaysCount;
-
+            //service = "owm";
+            ////    cnt = (int)sets.First().forecastDaysCount;
+            service = "ya";
 
             switch (service)
             {
@@ -65,6 +65,8 @@ namespace TheTime
                     OpenWeather();
                     break;
             }
+
+           
 
         }
 
@@ -124,15 +126,22 @@ namespace TheTime
 
         private void MainForm_Deactivate(object sender, EventArgs e)
         {
+            DeactivateForm();
+        }
+
+        public void DeactivateForm()
+        {
+            
+            CurIcon = "_01d";
             Bitmap bmp = new Bitmap((Image)TheTime.Properties.Resources.ResourceManager.GetObject(CurIcon));
 
             float size = 20;
             Font f = new Font(this.Font.FontFamily.Name, size, FontStyle.Bold);
-           
+
 
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.DrawString(CurTemp, f, Brushes.Blue, bmp.Width/7, bmp.Height / 5);
+                g.DrawString(CurTemp, f, Brushes.Blue, bmp.Width / 7, bmp.Height / 5);
             }
 
             if (this.WindowState == FormWindowState.Minimized)

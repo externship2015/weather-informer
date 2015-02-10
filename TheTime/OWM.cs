@@ -20,7 +20,7 @@ namespace TheTime
         public OWM()
         {
             InitializeComponent();
-            listOfCities = ww.GetListOfCities();  
+            listOfCities = ww.GetListOfCities();
         }
 
         private void OWM_Load(object sender, EventArgs e)
@@ -110,36 +110,36 @@ namespace TheTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string city = "";
-            string country = comboBox1.Text;
-            if (comboBox3.Visible == true)
-            {
-                city = comboBox3.Text;
-            }
-            else
-            {
-                city = comboBox2.Text;
-            }
+            //string city = "";
+            //string country = comboBox1.Text;
+            //if (comboBox3.Visible == true)
+            //{
+            //    city = comboBox3.Text;
+            //}
+            //else
+            //{
+            //    city = comboBox2.Text;
+            //}
 
-            OpenweathermapAPIWorker worker = new OpenweathermapAPIWorker();
-            List<OpenWeatherForecast>  CurWeather = worker.GetWeather(city, country);
+            //OpenweathermapAPIWorker worker = new OpenweathermapAPIWorker();
+            ////List<OpenWeatherForecast>  CurWeather = worker.GetWeather(city, region, country);
 
-            // CurWeather[0];
+            //// CurWeather[0];
 
-            Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(CurWeather[0].symbol);
-            pictureBox1.Image = myIcon;
+            //Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(CurWeather[0].symbol);
+            //pictureBox1.Image = myIcon;
 
-            label1.Text = CurWeather[0].temperature;
-            label2.Text = "Давление: " + CurWeather[0].pressure;
-            label3.Text = "Влажность воздуха: " + CurWeather[0].humidity+"%";
+            //label1.Text = CurWeather[0].temperature;
+            //label2.Text = "Давление: " + CurWeather[0].pressure;
+            //label3.Text = "Влажность воздуха: " + CurWeather[0].humidity + "%";
 
-            CurIcon = CurWeather[0].symbol;
-            CurTemp = CurWeather[0].temperature;
-           
-            
-            
-            //pictureBox1.Image.Dispose();
-            pictureBox1.Image = myIcon;
+            //CurIcon = CurWeather[0].symbol;
+            //CurTemp = CurWeather[0].temperature;
+
+
+
+            ////pictureBox1.Image.Dispose();
+            //pictureBox1.Image = myIcon;
 
         }
 
@@ -170,7 +170,7 @@ namespace TheTime
                 this.WindowState = FormWindowState.Normal;
                 this.ShowInTaskbar = true;
                 notifyIcon1.Visible = false;
-            } 
+            }
         }
     }
 }

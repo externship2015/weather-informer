@@ -23,48 +23,48 @@ namespace TheTime
             /*TODO 
              * Доставать настройки из базы и заполнить форму выбранными данными
              */
-            try
-            {
-                var sets = from c in Program.data.AppSettings select c;
-                if (sets.Count() > 0)
-                {
-                    switch (sets.First().service)
-                    {
-                        case "owm":
-                            radioButton2.Checked = true;
-                            break;
-                        case "ya":
-                            radioButton1.Checked = true;
-                            break;
-                    }
-                    switch (sets.First().forecastDaysCount)
-                    {
-                        case 1:
-                            radioButton3.Checked = true;
-                            break;
-                        case 3:
-                            radioButton4.Checked = true;
-                            break;
-                        case 10:
-                            radioButton5.Checked = true;
-                            break;
-                    }
+            //try
+            //{
+                //var sets = from c in Program.data.AppSettings select c;
+                //if (sets.Count() > 0)
+                //{
+                //    switch (sets.First().service)
+                //    {
+                //        case "owm":
+                //            radioButton2.Checked = true;
+                //            break;
+                //        case "ya":
+                //            radioButton1.Checked = true;
+                //            break;
+                //    }
+                //    switch (sets.First().forecastDaysCount)
+                //    {
+                //        case 1:
+                //            radioButton3.Checked = true;
+                //            break;
+                //        case 3:
+                //            radioButton4.Checked = true;
+                //            break;
+                //        case 10:
+                //            radioButton5.Checked = true;
+                //            break;
+                //    }
 
 
-                    comboBox1.Text = sets.First().curCountry;
-                    comboBox2.Text = sets.First().curRegion;
-                    comboBox3.Text = sets.First().curCity;
+                //    comboBox1.Text = sets.First().curCountry;
+                //    comboBox2.Text = sets.First().curRegion;
+                //    comboBox3.Text = sets.First().curCity;
 
-                }
-                else
-                {
-                    MessageBox.Show("Настройка программы не выполнялась. Заполните поля на форме");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Настройка программы не выполнялась. Заполните поля на форме");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void Settings_Load(object sender, EventArgs e)
@@ -167,73 +167,73 @@ namespace TheTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
 
-                // сохранение настроек в базу 
-                string curCity = comboBox3.Text;
-                string curRegion = comboBox2.Text;
-                string curCountry = comboBox1.Text;
-                string service = "";
-                int cnt;
+            //    // сохранение настроек в базу 
+            //    string curCity = comboBox3.Text;
+            //    string curRegion = comboBox2.Text;
+            //    string curCountry = comboBox1.Text;
+            //    string service = "";
+            //    int cnt;
 
-                if (radioButton1.Checked)
-                {
-                    service = "ya";
-                }
-                else
-                {
-                    service = "owm";
-                }
+            //    if (radioButton1.Checked)
+            //    {
+            //        service = "ya";
+            //    }
+            //    else
+            //    {
+            //        service = "owm";
+            //    }
 
-                if (radioButton3.Checked)
-                    cnt = 1;
-                else
-                    if (radioButton4.Checked)
-                        cnt = 3;
-                    else cnt = 10;
+            //    if (radioButton3.Checked)
+            //        cnt = 1;
+            //    else
+            //        if (radioButton4.Checked)
+            //            cnt = 3;
+            //        else cnt = 10;
 
-                // записываем в базу данных
-                var sets = from c in Program.data.AppSettings select c;
-                if (sets.Count() > 0)
-                {
-                    // update
-                    var AppSettings = (from c in Program.data.AppSettings select c).First();
-                    AppSettings.curCity = curCity;
-                    AppSettings.curRegion = curRegion;
-                    AppSettings.curCountry = curCountry;
-                    AppSettings.service = service;
-                    AppSettings.forecastDaysCount = cnt;
+            //    // записываем в базу данных
+            //    var sets = from c in Program.data.AppSettings select c;
+            //    if (sets.Count() > 0)
+            //    {
+            //        // update
+            //        var AppSettings = (from c in Program.data.AppSettings select c).First();
+            //        AppSettings.curCity = curCity;
+            //        AppSettings.curRegion = curRegion;
+            //        AppSettings.curCountry = curCountry;
+            //        AppSettings.service = service;
+            //        AppSettings.forecastDaysCount = cnt;
 
-                    Program.data.GetTable<AppSetting>();
-                    Program.data.SubmitChanges();
-                }
-                else
-                { 
-                    // new
-                    AppSetting set = new AppSetting
-                    {
-                        curCity = curCity,
-                        curCountry = curCountry,
-                        curRegion = curRegion,
-                        service = service,
-                        forecastDaysCount = cnt
-                    };
-                    Program.data.GetTable<AppSetting>().InsertOnSubmit(set);
-                    Program.data.SubmitChanges();
-                }
+            //        Program.data.GetTable<AppSetting>();
+            //        Program.data.SubmitChanges();
+            //    }
+            //    else
+            //    { 
+            //        // new
+            //        AppSetting set = new AppSetting
+            //        {
+            //            curCity = curCity,
+            //            curCountry = curCountry,
+            //            curRegion = curRegion,
+            //            service = service,
+            //            forecastDaysCount = cnt
+            //        };
+            //        Program.data.GetTable<AppSetting>().InsertOnSubmit(set);
+            //        Program.data.SubmitChanges();
+            //    }
                 
                
 
-                MessageBox.Show("Изменения сохранены!");
-                this.Close();
+            //    MessageBox.Show("Изменения сохранены!");
+            //    this.Close();
                 
                 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)

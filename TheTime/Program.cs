@@ -9,7 +9,7 @@ namespace TheTime
     static class Program
     {
 
-        public static DataWorkerDataContext data = new DataWorkerDataContext();
+       // public static DataWorkerDataContext data = new DataWorkerDataContext();
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -18,7 +18,8 @@ namespace TheTime
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TheTime.ПапкаАндрея.FormAndrew());
+            Application.Run(new MainForm());
+            //Application.Run(new TheTime.ПапкаАндрея.FormAndrew());
         }
     }
 }

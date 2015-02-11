@@ -64,11 +64,6 @@
   <ItemGroup>
     <Compile Include="Cities.cs" />
     <Compile Include="DataBaseWorker.cs" />
-    <Compile Include="DataWorker.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataWorker.dbml</DependentUpon>
-    </Compile>
     <Compile Include="DayFarecastData.cs" />
     <Compile Include="FactWeather.cs" />
     <Compile Include="Form1.cs">
@@ -116,9 +111,6 @@
       <DependentUpon>FormAndrew.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="DataWorker.dbml.layout">
-      <DependentUpon>DataWorker.dbml</DependentUpon>
-    </None>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,11 +130,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="DataWorker.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataWorker.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -290,12 +277,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\50n.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DataSet.mdf" />
-    <Content Include="DataSet_log.ldf">
-      <DependentUpon>DataSet.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

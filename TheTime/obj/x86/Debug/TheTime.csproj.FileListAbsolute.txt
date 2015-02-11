@@ -41,7 +41,6 @@ D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
 D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.exe.config
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.MainForm.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Settings.resources
-<<<<<<< HEAD
 D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\bin\Debug\TheTime.exe.config
 D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.exe
 D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.pdb
@@ -56,7 +55,6 @@ D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.OWM.resources
 D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.ПапкаАндрея.FormAndrew.resources
-=======
 C:\C#\Application\SimSoft\weather-informer\TheTime\bin\Debug\TheTime.exe.config
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.exe
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.pdb
@@ -69,4 +67,3 @@ C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.MainFor
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.OWM.resources
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
->>>>>>> dev

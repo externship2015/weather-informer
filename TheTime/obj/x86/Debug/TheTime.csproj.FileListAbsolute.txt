@@ -41,3 +41,16 @@ D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
 D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.exe.config
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.MainForm.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Settings.resources
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\bin\Debug\TheTime.exe.config
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.exe
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.pdb
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\bin\Debug\TheTime.exe
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\bin\Debug\TheTime.pdb
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.csprojResolveAssemblyReference.cache
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.Settings.resources
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.ПапкаАндрея.FormAndrew.resources
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.Form1.resources
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.MainForm.resources
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.OWM.resources
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
+D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache

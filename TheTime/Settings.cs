@@ -69,16 +69,21 @@ namespace TheTime
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            List<string> countries = new List<string>();
+            List<string> city = new List<string>();
 
             var custs = (from customer in listOfCities
-                         select new { customer.country }).Distinct();
-
+                         select new { customer.part }).Distinct();
+            custs = custs.OrderBy(customer => customer.part);
             foreach (var item in custs)
             {
-                comboBox1.Items.Add(item.country);
+                comboBox2.Items.Add(item.part);
             }
         }
+
+        /*private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillComboBox2();
+        }*/
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {

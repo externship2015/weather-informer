@@ -25,13 +25,17 @@ namespace TheTime
             foreach (XmlNode node in xDoc.DocumentElement)
             {
                 foreach (XmlNode node2 in node.ChildNodes)
-                {           
-                    ListOfCities.Add(new Cities { citName = node2.InnerText,
-                                                  country = ParseXMLString(node2.OuterXml, "country=\""),
-                                                  id = ParseXMLString(node2.OuterXml, "id=\""),
-                                                  part = ParseXMLString(node2.OuterXml, "part=\""),
-                                                  region = ParseXMLString(node2.OuterXml, "region=\"")
-                    });
+                {
+                    Cities City = new Cities
+                    {
+                        citName = node2.InnerText,
+                        country = ParseXMLString(node2.OuterXml, "country=\""),
+                        id = ParseXMLString(node2.OuterXml, "id=\""),
+                        part = ParseXMLString(node2.OuterXml, "part=\""),
+                        region = ParseXMLString(node2.OuterXml, "region=\"")
+                    };
+                    if (City.country == "Россия")
+                        ListOfCities.Add(City);
                 }
             }
             return ListOfCities;        

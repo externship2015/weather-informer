@@ -19,9 +19,11 @@ namespace TheTime
         string CurIcon = "";
         string CurTemp = "";
 
-        WeatherWorker ww = new WeatherWorker();
+        WeatherWorker ww1 = new WeatherWorker();
         List<Cities> listOfCities;
         List<FactWeather> listOfFacts;
+
+        SQLConnection sql = new SQLConnection();
 
         public MainForm()
         {
@@ -30,7 +32,33 @@ namespace TheTime
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            listOfCities = ww.GetListOfCities(); 
+            
+            //-----Сворачиваем форму при запуске в трей----
+            this.WindowState = FormWindowState.Minimized;
+            DeactivateForm();
+            
+            // Устанавливаем соединение с БД
+            SQLWorker sqlWorker = new SQLWorker();
+            if (sql.checkConnect())
+            {
+                if (!sqlWorker.FillSettings())
+                {
+                    MessageBox.Show("Настройки программы заданы по умолчанию");
+                }
+            }
+
+            
+
+
+
+
+            //------------ТАЙМЕР------------- 
+            //int num = 1; //
+            //TimerCallback tm = new TimerCallback(Count);
+            //System.Threading.Timer timer = new System.Threading.Timer(tm, num, 0, 2000);
+            //-------------------------------
+            
+            listOfCities = ww1.GetListOfCities(); 
 
 
             //var sets = from c in Program.data.AppSettings select c;
@@ -69,6 +97,15 @@ namespace TheTime
            
 
         }
+        /// <summary>
+        ////Callback method for timer
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void Count(object obj)
+        {
+            //Вызывать методы запросов сервисов и записи в БД
+           // MessageBox.Show("окно");
+        }
 
         public void OpenWeather() 
         {
@@ -92,9 +129,9 @@ namespace TheTime
         public void Yandex() 
         {
             groupBox1.Visible = true;
-            string id = ww.GetCityIdString(CurCountry, CurRegion, CurSity, listOfCities);
+            string id = ww1.GetCityIdString(CurCountry, CurRegion, CurSity, listOfCities);
             string ss = "";
-            listOfFacts = ww.GetFactWeather(id);
+            listOfFacts = ww1.GetFactWeather(id);
 
             CurIcon = listOfFacts[0].pic;
             CurTemp = listOfFacts[0].temp;

@@ -147,24 +147,12 @@ namespace TheTime
             return "";
         }
 
-
-
-        //public List<string> GetListOfCountries(List<Cities> list)
-        //{ 
-
-            
-        //}
-
-
-
-
         //Проверка делать insert или update для яндекса для дневной
         public bool isinsert(string id, string f_date)
         {
-            TheTime.ПапкаАндрея.SQLConnection sql = new TheTime.ПапкаАндрея.SQLConnection();
+            TheTime.SQLConnection sql = new TheTime.SQLConnection();
             try
-            {
-               
+            {            
          
                 OleDbDataReader reader = sql.Query("SELECT * FROM daily_forecast WHERE city='" + id + "' AND f_date = '" + f_date + "'");           
                 reader.Read();
@@ -186,7 +174,7 @@ namespace TheTime
         //Проверка делать insert или update для яндекса для часовой
         public bool isinserthour(string id, string f_date, string time_of_day)
         {
-            TheTime.ПапкаАндрея.SQLConnection sql = new TheTime.ПапкаАндрея.SQLConnection();
+            TheTime.SQLConnection sql = new TheTime.SQLConnection();
             try
             {
 
@@ -232,7 +220,7 @@ namespace TheTime
             string description = "";
 
 
-            TheTime.ПапкаАндрея.SQLConnection sql = new TheTime.ПапкаАндрея.SQLConnection();
+            TheTime.SQLConnection sql = new TheTime.SQLConnection();
             XmlDocument xDoc = new XmlDocument();
 
             xDoc.Load("http://export.yandex.ru/weather-ng/forecasts/" + id + ".xml");

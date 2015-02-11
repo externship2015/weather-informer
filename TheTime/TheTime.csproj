@@ -96,18 +96,20 @@
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingsData.cs" />
+    <Compile Include="SQLWorker.cs" />
     <Compile Include="WeatherWorker.cs" />
-    <Compile Include="ПапкаАндрея\FormAndrew.cs">
+    <Compile Include="FormAndrew.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ПапкаАндрея\FormAndrew.Designer.cs">
+    <Compile Include="FormAndrew.Designer.cs">
       <DependentUpon>FormAndrew.cs</DependentUpon>
     </Compile>
-    <Compile Include="ПапкаАндрея\SQLConnection.cs" />
+    <Compile Include="SQLConnection.cs" />
     <EmbeddedResource Include="Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ПапкаАндрея\FormAndrew.resx">
+    <EmbeddedResource Include="FormAndrew.resx">
       <DependentUpon>FormAndrew.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />

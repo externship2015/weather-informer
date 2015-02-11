@@ -8,7 +8,7 @@ namespace TheTime
 {
     static class Program
     {
-
+        public static SettingsData setData = new SettingsData();
        // public static DataWorkerDataContext data = new DataWorkerDataContext();
         /// <summary>
         /// Главная точка входа для приложения.

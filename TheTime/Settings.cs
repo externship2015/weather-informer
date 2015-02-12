@@ -15,12 +15,12 @@ namespace TheTime
 
         WeatherWorker ww = new WeatherWorker();
         List<Cities> listOfCities;
-        GetTime qwe = new GetTime();
+        //GetTime qwe = new GetTime();
         public Settings()
         {
             InitializeComponent();
             listOfCities = ww.GetListOfCities();
-            string dt = qwe.Yandex_Time();
+          //  string dt = qwe.Yandex_Time();
              switch (Program.setData.CurService)
              {
                  case "owm":

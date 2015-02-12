@@ -67,3 +67,4 @@ C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.MainFor
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.OWM.resources
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
+C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.ПапкаАндрея.FormAndrew.resources

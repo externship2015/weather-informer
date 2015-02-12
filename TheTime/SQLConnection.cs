@@ -20,7 +20,7 @@ namespace TheTime
 
         }
 
-        public bool checkConnect()
+        public bool checkConnect() 
         {
             try
             {

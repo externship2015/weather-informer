@@ -18,7 +18,8 @@ namespace TheTime
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new TheTime.DataAccessLevel.Form1());
+            //Application.Run(new MainForm());
             //Application.Run(new TheTime.ПапкаАндрея.FormAndrew());
         }
     }

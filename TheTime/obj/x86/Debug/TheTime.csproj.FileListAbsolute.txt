@@ -67,3 +67,12 @@ C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.MainFor
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.OWM.resources
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
+D:\Diplom\TheTime\TheTime\bin\Debug\EntityFramework.dll
+D:\Diplom\TheTime\TheTime\bin\Debug\EntityFramework.SqlServer.dll
+D:\Diplom\TheTime\TheTime\bin\Debug\System.Data.SQLite.dll
+D:\Diplom\TheTime\TheTime\bin\Debug\System.Data.SQLite.EF6.dll
+D:\Diplom\TheTime\TheTime\bin\Debug\System.Data.SQLite.Linq.dll
+D:\Diplom\TheTime\TheTime\bin\Debug\EntityFramework.xml
+D:\Diplom\TheTime\TheTime\bin\Debug\EntityFramework.SqlServer.xml
+D:\Diplom\TheTime\TheTime\bin\Debug\System.Data.SQLite.xml
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.DataAccessLevel.Form1.resources

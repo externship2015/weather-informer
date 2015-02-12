@@ -47,11 +47,6 @@ namespace TheTime
                 }
             }
 
-            
-
-
-
-
             //------------ТАЙМЕР------------- 
             //int num = 1; //
             //TimerCallback tm = new TimerCallback(Count);
@@ -171,6 +166,9 @@ namespace TheTime
             
             CurIcon = "_01d";
             Bitmap bmp = new Bitmap((Image)TheTime.Properties.Resources.ResourceManager.GetObject(CurIcon));
+            
+
+
 
             float size = 20;
             Font f = new Font(this.Font.FontFamily.Name, size, FontStyle.Bold);

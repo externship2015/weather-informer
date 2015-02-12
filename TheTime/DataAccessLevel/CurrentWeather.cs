@@ -9,10 +9,10 @@ namespace TheTime.DataAccessLevel
     {
         public string symbol { get; set; }
         public string description { get; set; }
-        public int temperature { get; set; }
-        public int windSpeed { get; set; }
+        public string temperature { get; set; }
+        public string windSpeed { get; set; }
         public string windDirection { get; set; } // в формате С, СЗ, Ю, ....
-        public int pressure { get; set; }
-        public int hummidity { get; set; }
+        public string pressure { get; set; }
+        public string hummidity { get; set; }
     }
 }

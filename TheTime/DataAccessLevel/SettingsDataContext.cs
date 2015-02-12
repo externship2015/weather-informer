@@ -10,6 +10,7 @@ namespace TheTime.DataAccessLevel
     /// </summary>
     class SettingsDataContext
     {
+        public int ID { get; set; }
         public int cityID { get; set; }
         public int sourceID { get; set; } // 1 - ya, 2 - owm
         public DateTime saveDate { get; set; }

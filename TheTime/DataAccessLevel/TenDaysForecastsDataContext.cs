@@ -11,6 +11,6 @@ namespace TheTime.DataAccessLevel
        public DateTime periodDate {get; set;} 
        public string timeOfDay {get; set;} 
        public string symbol {get; set;}
-       public int temperature { get; set;}
+       public string temperature { get; set; }
     }
 }

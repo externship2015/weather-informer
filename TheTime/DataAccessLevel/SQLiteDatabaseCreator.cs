@@ -39,8 +39,9 @@ namespace TheTime.DataAccessLevel
                 m_dbConnection.Open();
 
                 string sql = @"CREATE TABLE [regions] (
-                                        [ID]      integer         PRIMARY KEY NOT NULL,
-                                        [name]    varchar(100)    NOT NULL
+                                        [ID]        integer         PRIMARY KEY NOT NULL,
+                                        [regionID]  integer         NOT NULL,
+                                        [name]      varchar(100)    NOT NULL
                                         );";
 
                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
@@ -70,11 +71,11 @@ namespace TheTime.DataAccessLevel
                                     [periodDate]     varchar(200)     NOT NULL, 
                                     [periodTime]     integer          NOT NULL,
                                     [description]    varchar(200)     NOT NULL,
-                                    [temperature]    integer          NOT NULL,
-                                    [windSpeed]      integer          NULL,
+                                    [temperature]    varchar(10)      NOT NULL,
+                                    [windSpeed]      varchar(10)      NULL,
                                     [windDirection]  varchar(5)       NULL,
-                                    [pressure]       integer          NULL,
-                                    [hummidity]      integer          NULL, 
+                                    [pressure]       varchar(10)      NULL,
+                                    [hummidity]      varchar(10)      NULL, 
                                     [symbol]         varchar(20)      NOT NULL                             
                                     );";
                 command.ExecuteNonQuery();
@@ -85,11 +86,11 @@ namespace TheTime.DataAccessLevel
                                     [periodDate]     varchar(200)     NOT NULL, 
                                     [timeOfDay]      varchar(10)      NOT NULL,                                   
                                     [description]    varchar(200)     NOT NULL,
-                                    [temperature]    integer          NOT NULL,
-                                    [windSpeed]      integer          NULL,
+                                    [temperature]    varchar(10)      NOT NULL,
+                                    [windSpeed]      varchar(10)      NULL,
                                     [windDirection]  varchar(5)       NULL,
-                                    [pressure]       integer          NULL,
-                                    [hummidity]      integer          NULL, 
+                                    [pressure]       varchar(10)      NULL,
+                                    [hummidity]      varchar(10)      NULL, 
                                     [symbol]         varchar(20)      NOT NULL                           
                                     );";
                 command.ExecuteNonQuery();
@@ -99,7 +100,7 @@ namespace TheTime.DataAccessLevel
                                     [settingID]      integer          NOT NULL,
                                     [periodDate]     varchar(200)     NOT NULL, 
                                     [timeOfDay]      varchar(10)      NOT NULL, 
-                                    [temperature]    integer          NOT NULL,
+                                    [temperature]    varchar(10)      NOT NULL,
                                     [symbol]         varchar(20)      NOT NULL                    
                                     );";
                 command.ExecuteNonQuery();

@@ -176,8 +176,7 @@ namespace TheTime
 
         private void button2_Click(object sender, EventArgs e)
         {
-            OWM f2 = new OWM();
-            f2.Show();
+           
         }
 
     }

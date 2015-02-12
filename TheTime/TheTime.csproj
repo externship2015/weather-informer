@@ -89,6 +89,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="DataAccessLevel\HourlyForecastsDataContext.cs" />
+    <Compile Include="DataAccessLevel\RegionsCitiesDataContext.cs" />
     <Compile Include="DataAccessLevel\SettingsDataContext.cs" />
     <Compile Include="DataAccessLevel\SQLiteDatabaseCreator.cs" />
     <Compile Include="DataAccessLevel\SQLiteDatabaseWorker.cs" />
@@ -111,11 +112,12 @@
     </Compile>
     <Compile Include="OpenWeatherForecast.cs" />
     <Compile Include="OpenweathermapAPIWorker.cs" />
-    <Compile Include="OWM.cs">
+    <Compile Include="OpenWeatherMap\APIWorker.cs" />
+    <Compile Include="OpenWeatherMap\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OWM.Designer.cs">
-      <DependentUpon>OWM.cs</DependentUpon>
+    <Compile Include="OpenWeatherMap\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -139,6 +141,9 @@
     <EmbeddedResource Include="DataAccessLevel\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OpenWeatherMap\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,9 +156,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OWM.resx">
-      <DependentUpon>OWM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -35,7 +35,6 @@ D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.exe
 D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.pdb
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.csprojResolveAssemblyReference.cache
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Form1.resources
-D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.OWM.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
 D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.exe.config
@@ -76,3 +75,4 @@ D:\Diplom\TheTime\TheTime\bin\Debug\EntityFramework.xml
 D:\Diplom\TheTime\TheTime\bin\Debug\EntityFramework.SqlServer.xml
 D:\Diplom\TheTime\TheTime\bin\Debug\System.Data.SQLite.xml
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.DataAccessLevel.Form1.resources
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.OpenWeatherMap.Form1.resources

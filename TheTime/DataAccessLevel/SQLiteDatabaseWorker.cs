@@ -193,33 +193,19 @@ namespace TheTime.DataAccessLevel
 
         }
 
-        #endregion
-
-        #region ToDo
         /// <summary>
-        /// Заполняет таблицы с городами и регионами из xml-ки яндекса
-        /// </summary>
-        /// <returns></returns>
-        public bool FillCitiesAndRegionsTables()
-        {
-            return true;
-        }
-
-
-        /// <summary>
-        /// 
+        /// Получаем прогноз из базы данных
         /// </summary>
         /// <param name="Current">Текущие дата/время в формате DateTime</param>
-        /// <returns></returns>
+        /// <returns>объект класса Forecast</returns>
         public Forecast GetForecast(DateTime Current)
         {
             Forecast f = new Forecast();
 
-            
             // вычисляем "текущий час"
             int CurHour = Current.Hour;
-            switch (Current.Hour) 
-            { 
+            switch (Current.Hour)
+            {
                 case 1:
                 case 2:
                     CurHour = 0;
@@ -260,16 +246,16 @@ namespace TheTime.DataAccessLevel
             string sql = "SELECT * FROM 'hourly_forecasts' WHERE settingId = '" + sdc.ID + "' AND periodDate = '" + Current.Date.ToString() + "' AND periodTime = '" + CurHour + "' LIMIT 1;";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
-                        
+
             foreach (DbDataRecord record in reader)
             {
                 f.curWeather.description = record["description"].ToString();
-                f.curWeather.hummidity = int.Parse(record["hummidity"].ToString());
-                f.curWeather.pressure = int.Parse(record["pressure"].ToString());
+                f.curWeather.hummidity = record["hummidity"].ToString();
+                f.curWeather.pressure = record["pressure"].ToString();
                 f.curWeather.symbol = record["symbol"].ToString();
-                f.curWeather.temperature = int.Parse(record["temperature"].ToString());
+                f.curWeather.temperature = record["temperature"].ToString();
                 f.curWeather.windDirection = record["windDirection"].ToString();
-                f.curWeather.windSpeed = int.Parse(record["windSpeed"].ToString());
+                f.curWeather.windSpeed = record["windSpeed"].ToString();
             }
 
             // получаем прогноз на день
@@ -282,25 +268,93 @@ namespace TheTime.DataAccessLevel
             {
                 DailyForecastsDataContext context = new DailyForecastsDataContext();
                 context.description = record["description"].ToString();
-                context.hummidity = int.Parse(record["hummidity"].ToString());
+                context.hummidity = record["hummidity"].ToString();
                 context.periodDate = Current;
-                context.pressure = int.Parse(record["pressure"].ToString());
+                context.pressure = record["pressure"].ToString();
                 context.settingID = int.Parse(record["settingID"].ToString());
                 context.symbol = record["symbol"].ToString();
-                context.temperature = int.Parse(record["temperature"].ToString());
+                context.temperature = record["temperature"].ToString();
                 context.timeOfDay = record["timeOfDay"].ToString();
                 context.windDirection = record["windDirection"].ToString();
-                context.windSpeed = int.Parse(record["windSpeed"].ToString());
+                context.windSpeed = record["windSpeed"].ToString();
                 f.dailyList.Add(context);
             }
 
-            // получаем прогноз на 10 дней -> 10 записей
-            //string sql = "SELECT * FROM 'ten_days_forecasts' WHERE settingId = '" + sdc.ID + "' AND periodDate = '" + forecast.tenDaysList[i].periodDate.Date.ToString() + "' AND timeOfDay = '" + forecast.tenDaysList[i].timeOfDay + "';";
-               
+            // получаем прогноз на 10 дней -> 10*2 = 20 записей
+            sql = "SELECT * FROM 'ten_days_forecasts' WHERE settingId = '" + sdc.ID + "' AND (periodDate = '" + Current.Date.ToString() + "' OR periodDate = '" + Current.AddDays(1).Date.ToString() + "' OR periodDate = '" + Current.AddDays(2).Date.ToString() + "' OR periodDate = '" + Current.AddDays(3).Date.ToString() + "' OR periodDate = '" + Current.AddDays(4).Date.ToString() + "' OR periodDate = '" + Current.AddDays(5).Date.ToString() + "' OR periodDate = '" + Current.AddDays(6).Date.ToString() + "' OR periodDate = '" + Current.AddDays(7).Date.ToString() + "' OR periodDate = '" + Current.AddDays(8).Date.ToString() + "' OR periodDate = '" + Current.AddDays(9).Date.ToString() + "' );";
+            command = new SQLiteCommand(sql, m_dbConnection);
+            reader = command.ExecuteReader();
+            foreach (DbDataRecord record in reader)
+            {
+                TenDaysForecastsDataContext context = new TenDaysForecastsDataContext();
+                context.periodDate = Current;
+                context.settingID = int.Parse(record["settingID"].ToString());
+                context.symbol = record["symbol"].ToString();
+                context.temperature = record["temperature"].ToString();
+                context.timeOfDay = record["timeOfDay"].ToString();
+                f.tenDaysList.Add(context);
 
+            }
+
+            // получаем почасовой прогноз на день - должны получить 9 записей
+            sql = "SELECT * FROM 'hourly_forecasts' WHERE settingId = '" + sdc.ID + "' AND periodDate = '" + Current.Date.ToString() + "';";
+            command = new SQLiteCommand(sql, m_dbConnection);
+            reader = command.ExecuteReader();
+
+            foreach (DbDataRecord record in reader)
+            {
+                HourlyForecastsDataContext context = new HourlyForecastsDataContext();
+                context.description = record["description"].ToString();
+                context.hummidity = record["hummidity"].ToString();
+                context.periodDate = Current;
+                context.pressure = record["pressure"].ToString();
+                context.settingID = int.Parse(record["settingID"].ToString());
+                context.symbol = record["symbol"].ToString();
+                context.temperature = record["temperature"].ToString();
+                context.periodTime = int.Parse(record["periodTime"].ToString());
+                context.windDirection = record["windDirection"].ToString();
+                context.windSpeed = record["windSpeed"].ToString();
+                f.hourlyList.Add(context);
+            }
 
             return f;
         }
+
+       
+
+
+        #endregion
+
+        #region ToDo
+        /// <summary>
+        /// Заполняет таблицы с городами и регионами из xml-ки яндекса
+        /// </summary>
+        /// <returns></returns>
+        public void FillCitiesAndRegionsTables(RegionCitiesLists listRC)
+        {
+            string sql = "";
+            // записываем все регионы в базу
+            for (int i = 0; i < listRC.regionsList.Count; i++)
+            {
+                sql = @"INSERT INTO regions
+                                (regionID, name)
+                          VALUES ('" + listRC.regionsList[i].regionID + "', '" + listRC.regionsList[i].name + "');";
+                SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                command.ExecuteNonQuery();
+            }
+
+            // записываем все города в базу
+            for (int i =0; i<listRC.citiesList.Count; i++)
+            {
+                sql = @"INSERT INTO cities
+                                (name, regionID, yandexID, owmID)
+                          VALUES ('" + listRC.citiesList[i].name + "', '" + listRC.citiesList[i].regionID + "', '" + listRC.citiesList[i].yandexID + "', '" + listRC.citiesList[i].owmID + "');";
+                SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                command.ExecuteNonQuery();
+            }
+            
+        }
+
 
        
         #endregion

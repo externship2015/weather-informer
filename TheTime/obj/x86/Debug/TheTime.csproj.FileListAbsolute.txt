@@ -76,3 +76,6 @@ D:\Diplom\TheTime\TheTime\bin\Debug\EntityFramework.SqlServer.xml
 D:\Diplom\TheTime\TheTime\bin\Debug\System.Data.SQLite.xml
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.DataAccessLevel.Form1.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.OpenWeatherMap.Form1.resources
+D:\pr2\TheTime\bin\Debug\TheTime.exe.config
+D:\pr2\TheTime\obj\x86\Debug\TheTime.exe
+D:\pr2\TheTime\obj\x86\Debug\TheTime.pdb

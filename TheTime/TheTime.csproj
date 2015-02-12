@@ -138,6 +138,7 @@
       <DependentUpon>FormAndrew.cs</DependentUpon>
     </Compile>
     <Compile Include="SQLConnection.cs" />
+    <Compile Include="Yandex\YandexMethods.cs" />
     <EmbeddedResource Include="DataAccessLevel\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

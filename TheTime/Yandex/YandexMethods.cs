@@ -253,7 +253,7 @@ namespace TheTime.Yandex
                     {
                         name = item2.citName,
                         regionID =k,
-                        yandexID = Convert.ToInt16(item2.id)
+                        yandexID = Convert.ToInt32(item2.id)
                     });
                     }
                     k++;

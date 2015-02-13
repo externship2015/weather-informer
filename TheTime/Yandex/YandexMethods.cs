@@ -209,8 +209,10 @@ namespace TheTime.Yandex
         }
 
         //Возвращает регионы
-        public RegionCitiesLists GetRegionCitiesList(RegionCitiesLists reglist)
-        {        
+        public RegionCitiesLists GetRegionCitiesList()
+        {
+            RegionCitiesLists reglist = new RegionCitiesLists();
+
             List<RegionsDataContext> regionsList = new List<RegionsDataContext>();
             List<CitiesDataContext> citiesList = new List<CitiesDataContext>();
             List<Cities1> ListOfCities = new List<Cities1>();
@@ -253,7 +255,7 @@ namespace TheTime.Yandex
                     {
                         name = item2.citName,
                         regionID =k,
-                        yandexID = Convert.ToInt16(item2.id)
+                        yandexID = int.Parse(item2.id)
                     });
                     }
                     k++;

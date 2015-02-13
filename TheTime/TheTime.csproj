@@ -95,7 +95,13 @@
     <Compile Include="DataAccessLevel\SQLiteDatabaseWorker.cs" />
     <Compile Include="DataAccessLevel\TenDaysForecastsDataContext.cs" />
     <Compile Include="DataBaseWorker.cs" />
-    <Compile Include="Date_Time\Time.cs" />
+    <Compile Include="Date_Time\Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Date_Time\Test.Designer.cs">
+      <DependentUpon>Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Date_Time\GetTime.cs" />
     <Compile Include="DayFarecastData.cs" />
     <Compile Include="FactWeather.cs" />
     <Compile Include="Form1.cs">
@@ -142,6 +148,9 @@
     <Compile Include="Yandex\YandexMethods.cs" />
     <EmbeddedResource Include="DataAccessLevel\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Date_Time\Test.resx">
+      <DependentUpon>Test.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OpenWeatherMap\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

@@ -75,6 +75,28 @@ namespace TheTime
             CurSity = "Ульяновск";
             CurCountry = "Россия";
             CurRegion = "Ульяновская область";
+
+            //------Заполнение  GRIDVIEW
+
+            for (int i = 0; i < 8; i++)
+            {
+                string id = ww1.GetCityIdString(CurCountry, CurRegion, CurSity, listOfCities);
+                string ss = "";
+                int t = 3*i;
+                listOfFacts = ww1.GetFactWeather(id);
+                if (i!=7)
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[i].Cells[0].Value = (t).ToString()+":00";
+                dataGridView1.Rows[i].Cells[1].Value = listOfFacts[0].temp;
+                Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(listOfFacts[0].pic);
+                dataGridView1.Rows[i].Cells[2].Value = myIcon;
+                dataGridView1.Rows[i].Cells[3].Value = listOfFacts[0].wind_speed;
+                dataGridView1.Rows[i].Cells[4].Value = listOfFacts[0].pressure;
+                dataGridView1.Rows[i].Cells[5].Value = listOfFacts[0].humidity;
+               
+            }
+            
+
             //service = "owm";
             ////    cnt = (int)sets.First().forecastDaysCount;
             service = "ya";
@@ -187,6 +209,21 @@ namespace TheTime
                 this.ShowInTaskbar = false;
                 notifyIcon1.Visible = true;
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            
         }
     }
 }

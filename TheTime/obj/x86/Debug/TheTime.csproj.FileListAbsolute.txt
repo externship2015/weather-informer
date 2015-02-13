@@ -94,3 +94,4 @@ C:\C#\Application\SimSoft\weather-informer-master(0)\weather-informer\TheTime\ob
 C:\C#\Application\SimSoft\weather-informer-master(0)\weather-informer\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
 C:\C#\Application\SimSoft\weather-informer-master(0)\weather-informer\TheTime\obj\x86\Debug\TheTime.exe
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Date_Time.Test.resources
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.MainForm2.resources

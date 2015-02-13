@@ -41,7 +41,7 @@ namespace TheTime.DataAccessLevel
         private void button3_Click(object sender, EventArgs e)
         {
             SettingsDataContext sdc = new SettingsDataContext();
-            sdc.cityID = 1234;
+            sdc.cityID = 27786;
             sdc.sourceID = 1;
             sdc.saveDate = DateTime.Now;
 

@@ -13,6 +13,7 @@ namespace TheTime.DataAccessLevel
 
     public class CitiesDataContext
     {
+
         public string name { get; set; }
         public int regionID { get; set; }
         public int yandexID { get; set; }

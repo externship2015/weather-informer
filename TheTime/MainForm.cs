@@ -92,8 +92,7 @@ namespace TheTime
                 dataGridView1.Rows[i].Cells[2].Value = myIcon;
                 dataGridView1.Rows[i].Cells[3].Value = listOfFacts[0].wind_speed;
                 dataGridView1.Rows[i].Cells[4].Value = listOfFacts[0].pressure;
-                dataGridView1.Rows[i].Cells[5].Value = listOfFacts[0].humidity;
-               
+                dataGridView1.Rows[i].Cells[5].Value = listOfFacts[0].humidity;               
             }
             
 

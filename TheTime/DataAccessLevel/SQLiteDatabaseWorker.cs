@@ -83,12 +83,15 @@ namespace TheTime.DataAccessLevel
         /// <param name="forecast">объект класса Forecast</param>
         public void SaveForecast(Forecast forecast)
         {
+            // получаем текущий SettingID
+            SettingsDataContext set = GetSettings();
+
             // для каждого  public List<HourlyForecastsDataContext> hourlyList { get; set; } - проверяем и обновляем / переписываем
             #region
             for (int i = 0; i < forecast.hourlyList.Count; i++)
             {
                 // проверить наличие такой строки в базе               
-                string sql = "SELECT * FROM 'hourly_forecasts' WHERE settingId = '" + forecast.hourlyList[i].settingID + "' AND periodDate = '" + forecast.hourlyList[i].periodDate.Date.ToString() + "' AND periodTime = '" + forecast.hourlyList[i].periodTime + "';";
+                string sql = "SELECT * FROM 'hourly_forecasts' WHERE settingId = '" + set.ID + "' AND periodDate = '" + forecast.hourlyList[i].periodDate.Date.ToString() + "' AND periodTime = '" + forecast.hourlyList[i].periodTime + "';";
                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
@@ -103,7 +106,7 @@ namespace TheTime.DataAccessLevel
                 {
                     // делаем update
                     sql = @"UPDATE 'hourly_forecasts' SET
-                            description = '" + forecast.hourlyList[i].description + "', temperature = '" + forecast.hourlyList[i].temperature + "', windSpeed = '" + forecast.hourlyList[i].windSpeed + "', windDirection = '" + forecast.hourlyList[i].windDirection + "', pressure = '" + forecast.hourlyList[i].pressure + "', hummidity = '" + forecast.hourlyList[i].hummidity + "', symbol ='" + forecast.hourlyList[i].symbol + "' WHERE settingId = '" + forecast.hourlyList[i].settingID + "' AND periodDate = '" + forecast.hourlyList[i].periodDate.Date.ToString() + "' AND periodTime = '" + forecast.hourlyList[i].periodTime + "';";
+                            description = '" + forecast.hourlyList[i].description + "', temperature = '" + forecast.hourlyList[i].temperature + "', windSpeed = '" + forecast.hourlyList[i].windSpeed + "', windDirection = '" + forecast.hourlyList[i].windDirection + "', pressure = '" + forecast.hourlyList[i].pressure + "', hummidity = '" + forecast.hourlyList[i].hummidity + "', symbol ='" + forecast.hourlyList[i].symbol + "' WHERE settingId = '" + set.ID + "' AND periodDate = '" + forecast.hourlyList[i].periodDate.Date.ToString() + "' AND periodTime = '" + forecast.hourlyList[i].periodTime + "';";
                     command = new SQLiteCommand(sql, m_dbConnection);
                     command.ExecuteNonQuery();
                 }
@@ -112,7 +115,7 @@ namespace TheTime.DataAccessLevel
                     // сохраняем
                     sql = @"INSERT INTO hourly_forecasts
                                 (settingID, periodDate, periodTime, description, temperature, windSpeed, windDirection, pressure, hummidity, symbol)
-                          VALUES ('" + forecast.hourlyList[i].settingID + "', '" + forecast.hourlyList[i].periodDate.Date.ToString() + "', '" + forecast.hourlyList[i].periodTime + "', '" + forecast.hourlyList[i].description + "', '" + forecast.hourlyList[i].temperature + "', '" + forecast.hourlyList[i].windSpeed + "', '" + forecast.hourlyList[i].windDirection + "', '" + forecast.hourlyList[i].pressure + "', '" + forecast.hourlyList[i].hummidity + "', '" + forecast.hourlyList[i].symbol + "')";
+                          VALUES ('" + set.ID + "', '" + forecast.hourlyList[i].periodDate.Date.ToString() + "', '" + forecast.hourlyList[i].periodTime + "', '" + forecast.hourlyList[i].description + "', '" + forecast.hourlyList[i].temperature + "', '" + forecast.hourlyList[i].windSpeed + "', '" + forecast.hourlyList[i].windDirection + "', '" + forecast.hourlyList[i].pressure + "', '" + forecast.hourlyList[i].hummidity + "', '" + forecast.hourlyList[i].symbol + "')";
                     command = new SQLiteCommand(sql, m_dbConnection);
                     command.ExecuteNonQuery();
                 }
@@ -124,7 +127,7 @@ namespace TheTime.DataAccessLevel
             for (int i = 0; i < forecast.dailyList.Count; i++)
             {
                 // проверить наличие такой строки в базе               
-                string sql = "SELECT * FROM 'daily_forecasts' WHERE settingId = '" + forecast.dailyList[i].settingID + "' AND periodDate = '" + forecast.dailyList[i].periodDate.Date.ToString() + "' AND timeOfDay = '" + forecast.dailyList[i].timeOfDay + "';";
+                string sql = "SELECT * FROM 'daily_forecasts' WHERE settingId = '" + set.ID + "' AND periodDate = '" + forecast.dailyList[i].periodDate.Date.ToString() + "' AND timeOfDay = '" + forecast.dailyList[i].timeOfDay + "';";
                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
@@ -139,7 +142,7 @@ namespace TheTime.DataAccessLevel
                 {
                     // делаем update
                     sql = @"UPDATE 'daily_forecasts' SET
-                            description = '" + forecast.dailyList[i].description + "', temperature = '" + forecast.dailyList[i].temperature + "', windSpeed = '" + forecast.dailyList[i].windSpeed + "', windDirection = '" + forecast.dailyList[i].windDirection + "', pressure = '" + forecast.dailyList[i].pressure + "', hummidity = '" + forecast.dailyList[i].hummidity + "', symbol ='" + forecast.dailyList[i].symbol + "' WHERE settingId = '" + forecast.dailyList[i].settingID + "' AND periodDate = '" + forecast.dailyList[i].periodDate.Date.ToString() + "' AND timeOfDay = '" + forecast.dailyList[i].timeOfDay + "';";
+                            description = '" + forecast.dailyList[i].description + "', temperature = '" + forecast.dailyList[i].temperature + "', windSpeed = '" + forecast.dailyList[i].windSpeed + "', windDirection = '" + forecast.dailyList[i].windDirection + "', pressure = '" + forecast.dailyList[i].pressure + "', hummidity = '" + forecast.dailyList[i].hummidity + "', symbol ='" + forecast.dailyList[i].symbol + "' WHERE settingId = '" + set.ID + "' AND periodDate = '" + forecast.dailyList[i].periodDate.Date.ToString() + "' AND timeOfDay = '" + forecast.dailyList[i].timeOfDay + "';";
                     command = new SQLiteCommand(sql, m_dbConnection);
                     command.ExecuteNonQuery();
                 }
@@ -148,7 +151,7 @@ namespace TheTime.DataAccessLevel
                     // сохраняем
                     sql = @"INSERT INTO daily_forecasts
                                 (settingID, periodDate, timeOfDay, description, temperature, windSpeed, windDirection, pressure, hummidity, symbol)
-                          VALUES ('" + forecast.dailyList[i].settingID + "', '" + forecast.dailyList[i].periodDate.Date.ToString() + "', '" + forecast.dailyList[i].timeOfDay + "', '" + forecast.dailyList[i].description + "', '" + forecast.dailyList[i].temperature + "', '" + forecast.dailyList[i].windSpeed + "', '" + forecast.dailyList[i].windDirection + "', '" + forecast.dailyList[i].pressure + "', '" + forecast.dailyList[i].hummidity + "', '" + forecast.dailyList[i].symbol + "')";
+                          VALUES ('" + set.ID + "', '" + forecast.dailyList[i].periodDate.Date.ToString() + "', '" + forecast.dailyList[i].timeOfDay + "', '" + forecast.dailyList[i].description + "', '" + forecast.dailyList[i].temperature + "', '" + forecast.dailyList[i].windSpeed + "', '" + forecast.dailyList[i].windDirection + "', '" + forecast.dailyList[i].pressure + "', '" + forecast.dailyList[i].hummidity + "', '" + forecast.dailyList[i].symbol + "')";
                     command = new SQLiteCommand(sql, m_dbConnection);
                     command.ExecuteNonQuery();
                 }
@@ -160,7 +163,7 @@ namespace TheTime.DataAccessLevel
             for (int i = 0; i < forecast.tenDaysList.Count; i++)
             {
                 // проверить наличие такой строки в базе               
-                string sql = "SELECT * FROM 'ten_days_forecasts' WHERE settingId = '" + forecast.tenDaysList[i].settingID + "' AND periodDate = '" + forecast.tenDaysList[i].periodDate.Date.ToString() + "' AND timeOfDay = '" + forecast.tenDaysList[i].timeOfDay + "';";
+                string sql = "SELECT * FROM 'ten_days_forecasts' WHERE settingId = '" + set.ID + "' AND periodDate = '" + forecast.tenDaysList[i].periodDate.Date.ToString() + "' AND timeOfDay = '" + forecast.tenDaysList[i].timeOfDay + "';";
                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
@@ -175,7 +178,7 @@ namespace TheTime.DataAccessLevel
                 {
                     // делаем update
                     sql = @"UPDATE 'ten_days_forecasts' SET
-                            temperature = '" + forecast.tenDaysList[i].temperature + "',  symbol ='" + forecast.tenDaysList[i].symbol + "' WHERE settingId = '" + forecast.tenDaysList[i].settingID + "' AND periodDate = '" + forecast.tenDaysList[i].periodDate.Date.ToString() + "' AND timeOfDay = '" + forecast.tenDaysList[i].timeOfDay + "';";
+                            temperature = '" + forecast.tenDaysList[i].temperature + "',  symbol ='" + forecast.tenDaysList[i].symbol + "' WHERE settingId = '" + set.ID + "' AND periodDate = '" + forecast.tenDaysList[i].periodDate.Date.ToString() + "' AND timeOfDay = '" + forecast.tenDaysList[i].timeOfDay + "';";
                     command = new SQLiteCommand(sql, m_dbConnection);
                     command.ExecuteNonQuery();
                 }
@@ -184,7 +187,7 @@ namespace TheTime.DataAccessLevel
                     // сохраняем
                     sql = @"INSERT INTO ten_days_forecasts
                                 (settingID, periodDate, timeOfDay, temperature, symbol)
-                          VALUES ('" + forecast.tenDaysList[i].settingID + "', '" + forecast.tenDaysList[i].periodDate.Date.ToString() + "', '" + forecast.tenDaysList[i].timeOfDay + "', '" + forecast.tenDaysList[i].temperature + "', '" + forecast.tenDaysList[i].symbol + "')";
+                          VALUES ('" + set.ID + "', '" + forecast.tenDaysList[i].periodDate.Date.ToString() + "', '" + forecast.tenDaysList[i].timeOfDay + "', '" + forecast.tenDaysList[i].temperature + "', '" + forecast.tenDaysList[i].symbol + "')";
                     command = new SQLiteCommand(sql, m_dbConnection);
                     command.ExecuteNonQuery();
                 }
@@ -319,11 +322,7 @@ namespace TheTime.DataAccessLevel
 
             return f;
         }
-        
 
-        #endregion
-
-        #region ToDo
         /// <summary>
         /// Заполняет таблицы с городами и регионами из xml-ки яндекса
         /// </summary>
@@ -342,7 +341,7 @@ namespace TheTime.DataAccessLevel
             }
 
             // записываем все города в базу
-            for (int i =0; i<listRC.citiesList.Count; i++)
+            for (int i = 0; i < listRC.citiesList.Count; i++)
             {
                 sql = @"INSERT INTO cities
                                 (name, regionID, yandexID, owmID)
@@ -350,11 +349,48 @@ namespace TheTime.DataAccessLevel
                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
                 command.ExecuteNonQuery();
             }
-            
+        }    
+        #endregion
+
+        #region ToDo
+
+        /// <summary>
+        /// Получает список городов из базы
+        /// </summary>
+        /// <returns>объект класса RegionCitiesLists</returns>
+        public RegionCitiesLists GetCitiesList()
+        {
+            RegionCitiesLists listRC = new RegionCitiesLists();
+            string sql = "SELECT * FROM 'cities' ;";
+            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            foreach (DbDataRecord record in reader)
+            {
+                listRC.citiesList.Add(new CitiesDataContext
+                {
+                    name = record["name"].ToString(),
+                    regionID = int.Parse(record["regionID"].ToString()),
+                    yandexID = int.Parse(record["yandexID"].ToString()),
+                    owmID = int.Parse(record["owmID"].ToString())
+                });
+            }
+
+            sql = "SELECT * FROM 'regions';";
+            command = new SQLiteCommand(sql, m_dbConnection);
+            reader = command.ExecuteReader();
+            foreach (DbDataRecord record in reader)
+            {
+                listRC.regionsList.Add(new RegionsDataContext
+                {
+                    regionID = int.Parse(record["regionID"].ToString()),
+                    name = record["name"].ToString()
+                });
+            }
+
+            return listRC;
         }
-
-
-       
+          
         #endregion
     }
 }

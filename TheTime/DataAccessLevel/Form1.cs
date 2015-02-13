@@ -111,10 +111,35 @@ namespace TheTime.DataAccessLevel
         private void button6_Click(object sender, EventArgs e)
         {
             SQLiteDatabaseWorker worker = new SQLiteDatabaseWorker();
-            worker.SetConnect(@"d:\InformerDataBase2.db");
+            worker.SetConnect(Program.DBName);
             Forecast f = worker.GetForecast(DateTime.Now);
             worker.CloseConnect();
-            int a = 0;
+          
+        }
+
+        // заполняем базу городами
+        private void button7_Click(object sender, EventArgs e)
+        {
+            // получаем города и региона
+            
+            Yandex.YandexMethods worker = new Yandex.YandexMethods();
+            RegionCitiesLists list = worker.GetRegionCitiesList();
+
+            SQLiteDatabaseWorker SQLworker = new SQLiteDatabaseWorker();
+            SQLworker.SetConnect(Program.DBName);
+            SQLworker.FillCitiesAndRegionsTables(list);
+            SQLworker.CloseConnect();
+         
+        }
+
+        // получение списка городов и регионов из базы
+        private void button8_Click(object sender, EventArgs e)
+        {
+            SQLiteDatabaseWorker SQLworker = new SQLiteDatabaseWorker();
+            SQLworker.SetConnect(Program.DBName);
+            RegionCitiesLists list = SQLworker.GetCitiesList();
+            SQLworker.CloseConnect();
+
         }
     }
 }

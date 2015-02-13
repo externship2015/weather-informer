@@ -12,7 +12,7 @@ namespace TheTime.DataAccessLevel
     {
         public int ID { get; set; }
         public int cityID { get; set; }
-        public int sourceID { get; set; } // 1 - ya, 2 - owm
+        public int sourceID { get; set; } // 2 - ya, 1 - owm
         public DateTime saveDate { get; set; }
     }
 }

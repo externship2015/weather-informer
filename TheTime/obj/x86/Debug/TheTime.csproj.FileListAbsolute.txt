@@ -115,3 +115,5 @@ D:\pr3\TheTime\obj\x86\Debug\TheTime.Form1.resources
 D:\pr3\TheTime\obj\x86\Debug\TheTime.MainForm.resources
 D:\pr3\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 D:\pr3\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Date_Time.Test.resources
+D:\pr3\TheTime\obj\x86\Debug\TheTime.Date_Time.Test.resources

@@ -319,9 +319,7 @@ namespace TheTime.DataAccessLevel
 
             return f;
         }
-
-       
-
+        
 
         #endregion
 

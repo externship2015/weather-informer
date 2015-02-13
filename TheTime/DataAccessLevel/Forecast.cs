@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TheTime.DataAccessLevel
 {
-    class Forecast
+    public class Forecast
     {
         //public List<HourlyForecastsDataContext> hourlyList { get; set; }
         //public List<DailyForecastsDataContext> dailyList { get; set; }

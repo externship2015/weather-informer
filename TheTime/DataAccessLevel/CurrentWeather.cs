@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TheTime.DataAccessLevel
 {
-    class CurrentWeather
+    public class CurrentWeather
     {
         public string symbol { get; set; }
         public string description { get; set; }

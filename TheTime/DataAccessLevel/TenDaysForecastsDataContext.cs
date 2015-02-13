@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TheTime.DataAccessLevel
 {
-    class TenDaysForecastsDataContext
+    public class TenDaysForecastsDataContext
     {
        public int settingID {get; set;}
        public DateTime periodDate {get; set;} 

@@ -5,13 +5,13 @@ using System.Text;
 
 namespace TheTime.DataAccessLevel
 {
-    class RegionsDataContext
+    public class RegionsDataContext
     {
         public int regionID { get; set; }
         public string name { get; set; }
     }
 
-    class CitiesDataContext
+    public class CitiesDataContext
     {
         public string name { get; set; }
         public int regionID { get; set; }
@@ -19,7 +19,7 @@ namespace TheTime.DataAccessLevel
         public int owmID { get; set; }
     }
 
-    class RegionCitiesLists
+    public class RegionCitiesLists
     {
         public List<RegionsDataContext> regionsList = new List<RegionsDataContext>();
         public List<CitiesDataContext> citiesList = new List<CitiesDataContext>();

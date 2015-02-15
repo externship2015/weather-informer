@@ -372,7 +372,7 @@ namespace TheTime.DataAccessLevel
                     name = record["name"].ToString(),
                     regionID = int.Parse(record["regionID"].ToString()),
                     yandexID = int.Parse(record["yandexID"].ToString()),
-                    owmID = int.Parse(record["owmID"].ToString())
+                    owmID = record["owmID"].ToString()
                 });
             }
 
@@ -391,6 +391,25 @@ namespace TheTime.DataAccessLevel
             return listRC;
         }
           
+
+        public CitiesDataContext GetCityByYaId(string yaid)
+        {
+            CitiesDataContext context = new CitiesDataContext();
+
+            string sql = "select * from cities where yandexID = '"+yaid+"'";
+            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            foreach (DbDataRecord record in reader)
+            {
+                context.name = record["name"].ToString();
+                context.owmID = record["owmID"].ToString();
+                context.regionID = int.Parse(record["regionID"].ToString());
+                context.yandexID = int.Parse(record["yandexID"].ToString());
+                
+            }
+
+            return context;
+        }
         #endregion
     }
 }

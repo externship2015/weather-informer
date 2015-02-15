@@ -1,6 +1,6 @@
-﻿namespace TheTime
+﻿namespace TheTime.ПапкаАндрея
 {
-    partial class MainForm2
+    partial class FormAndrew
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,14 @@
         {
             this.SuspendLayout();
             // 
-            // MainForm2
+            // FormAndrew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "MainForm2";
-            this.Text = "MainForm2";
-            this.Load += new System.EventHandler(this.MainForm2_Load);
+            this.Name = "FormAndrew";
+            this.Text = "FormAndrew";
+            this.Load += new System.EventHandler(this.FormAndrew_Load);
             this.ResumeLayout(false);
 
         }

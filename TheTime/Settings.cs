@@ -6,154 +6,200 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using TheTime.DataAccessLevel;
 using TheTime.Date_Time;
+using TheTime.Yandex;
 
 namespace TheTime
 {
     public partial class Settings : Form
     {
 
-        WeatherWorker ww = new WeatherWorker();
-        List<Cities> listOfCities;
-        //GetTime qwe = new GetTime();
+        SettingsDataContext sdc = new SettingsDataContext();
+        YandexMethods ym = new YandexMethods();
+        RegionCitiesLists rsl = new RegionCitiesLists();
+
+        int regionid = 0;
+        int yacityId = 0;
+        int opcityid = 0;
+        int tempid = 0;
         public Settings()
         {
             InitializeComponent();
-            listOfCities = ww.GetListOfCities();
-          //  string dt = qwe.Yandex_Time();
-             switch (Program.setData.CurService)
-             {
-                 case "owm":
-                     radioButton2.Checked = true;
-                     break;
-                 case "ya":
-                     radioButton1.Checked = true;
-                     break;
-             }
-             comboBox1.Text = Program.setData.CurCountry;
-             comboBox2.Text = Program.setData.CurRegion;
-             comboBox3.Text = Program.setData.CurCity;           
+             rsl= ym.GetRegionCitiesList();
         }
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            List<string> city = new List<string>();
+            radioButton1.Checked = true;
 
-            var custs = (from customer in listOfCities
-                         select new { customer.part }).Distinct();
-            custs = custs.OrderBy(customer => customer.part);
-            foreach (var item in custs)
-            {
-                comboBox2.Items.Add(item.part);
-            }
+            SQLiteDatabaseWorker worker = new SQLiteDatabaseWorker();
+            worker.SetConnect(Program.DBName);
+            SettingsDataContext sdc = worker.GetSettings(); // настройки
+            worker.CloseConnect();
+            regionid = FindRegionIdByCityId(sdc.cityID);
+            yacityId = sdc.cityID;
+            getYandex(FindRegionIdByCityId(sdc.cityID));
+            tempid = sdc.cityID;
+            FillComboBox2(FindRegionIdByCityId(sdc.cityID), tempid);
+            if (sdc.sourceID == 2)
+                radioButton1.Checked = true;
+            if (sdc.sourceID == 1)
+                radioButton2.Checked = true;            
+
+           
+
+
+
+
+
+
+          
         }      
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillComboBox2();
+            regionid = FindRegionId(comboBox1.Text);
+            FillComboBox2(regionid,tempid);
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillComboBox3();
+            //FillComboBox3();
         }
 
-        public void FillComboBox2()
+        public void FillComboBox2(int regId, int cityid)
         {
-            comboBox3.Items.Clear();
-            comboBox3.Text = "";
             comboBox2.Items.Clear();
             comboBox2.Text = "";
-            var custs = (from customer in listOfCities
-                         select new { customer.part, customer.country }).Where(t => t.country.ToString() == comboBox1.Text.ToString()).Distinct();
-
-
-            foreach (var item in custs.OrderBy(s => s.part))
+            bool check = false;
+            foreach (var item in rsl.citiesList.OrderBy(s => s.name).Where(s=>s.regionID==regId))
             {
-                if (item.part.ToString() != "")
-                    comboBox2.Items.Add(item.part);
-
-            }
-
-            if (comboBox2.Items.Count == 0)
-            {
-                var custs2 = (from customer in listOfCities
-                              select new { customer.citName, customer.country }).Where(t => t.country.ToString() == comboBox1.Text.ToString()).Distinct();
-
-
-                foreach (var item in custs2.OrderBy(s => s.citName))
+                
+                
+                comboBox2.Items.Add(item.name);
+                if (!check)
                 {
-                    if (item.citName.ToString() != "")
-                        comboBox2.Items.Add(item.citName);
+                    comboBox2.Text = item.name;
+                    yacityId = item.yandexID;
+                    check = true;
                 }
+                if (item.yandexID == cityid)
+                    comboBox2.Text = item.name;
             }
         }
 
         public void FillComboBox3()
         {
-            comboBox3.Items.Clear();
-            comboBox3.Text = "";
-            List<string> countries = new List<string>();
-
-            var custs = (from customer in listOfCities
-                         select new { customer.part, customer.citName }).Where(t => t.part.ToString() == comboBox2.Text.ToString()).Distinct();
-
-
-            foreach (var item in custs.OrderBy(s => s.citName)) // list2 .Where(t=>t.country.ToString()==comboBox1.Text.ToString()).Distinct())
-            {
-                if (item.citName.ToString() != "")
-                    comboBox3.Items.Add(item.citName);
-            }
-
-            if (comboBox3.Items.Count != 0)
-            {
-                comboBox3.Visible = true;
-            }
-            else
-            {
-                comboBox3.Visible = false;
-            }
+            regionid = FindRegionId(comboBox1.Text);
+            yacityId = FindCityYaId(regionid, comboBox2.Text);            
         }
 
         private void comboBox1_Leave(object sender, EventArgs e)
         {
-            FillComboBox2();
+            regionid = FindRegionId(comboBox1.Text);
+            FillComboBox2(regionid,tempid);
         }
 
         private void comboBox2_Leave(object sender, EventArgs e)
         {
+
             FillComboBox3();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Program.setData.CurCity = comboBox3.Text;
-                Program.setData.CurRegion = comboBox2.Text;
-                Program.setData.CurCountry = "Россия";
-               if (radioButton1.Checked)
-               {
-                   Program.setData.CurService = "ya";
-               }
-               else
-               {
-                   Program.setData.CurService = "owm";
-               }
+            //FillComboBox2(regionid, tempid);
+            sdc.cityID = yacityId;
+            if (radioButton1.Checked == true)
+                sdc.sourceID = 2;
+            else
+                sdc.sourceID = 1;
+            sdc.saveDate = DateTime.Now.Date;
 
-                // Записываем в БД
-               SQLWorker sqlW= new SQLWorker();
-               sqlW.UpdateSettings();
+            string s = "";
+            SQLiteDatabaseWorker worker = new SQLiteDatabaseWorker();
+            worker.SetConnect(Program.DBName);
+            worker.SaveSettings(sdc);
+            worker.CloseConnect();
+            this.Close();
 
-               MessageBox.Show("Изменения сохранены");
-               this.Close(); 
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
             
-        }       
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+              if (radioButton1.Checked == true)
+                radioButton2.Checked = false;
+              if (radioButton2.Checked == true)
+                  radioButton1.Checked = false;             
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+              if (radioButton1.Checked == true)
+                radioButton2.Checked = false;
+              if (radioButton2.Checked == true)
+                  radioButton1.Checked = false;
+          
+        }
+
+        public void getYandex(int regionid)
+        {
+            comboBox1.Items.Clear();
+            comboBox2.Items.Clear();
+            
+            
+            foreach (var item in rsl.regionsList.OrderBy(s => s.name))
+            {
+                //if(item.name!="")
+                comboBox1.Items.Add(item.name);
+                if (regionid == item.regionID)
+                    comboBox1.Text = item.name;
+            }
+
+        }
+        //public void OnChangedRB()
+        //{
+        //    if (radioButton1.Checked == true)
+        //        sdc.sourceID = 2;
+        //    if (radioButton2.Checked == true)
+        //        sdc.sourceID = 1;           
+        //}
+
+        public int FindRegionId(string str)
+        {
+            int st1=0;
+            foreach (var item in rsl.regionsList.Where(s=>s.name==str))
+            {
+                st1 = item.regionID;
+                break;
+            }
+            return st1; 
+        }
+
+        public int FindCityYaId(int regId, string cityName)
+        {
+            int st1 = 0;
+            foreach (var item in rsl.citiesList.Where(s => s.regionID == regId && s.name==cityName))
+            {
+                st1 = item.yandexID;
+                break;
+            }
+            return st1; 
+        }
+
+        public int FindRegionIdByCityId(int cityid)
+        {
+            int st1 = 0;
+            foreach (var item in rsl.citiesList.Where(s => s.yandexID == cityid))
+            {
+                st1 = item.regionID;
+                break;
+            }
+            return st1;
+
+        }
+        
     }
 }

@@ -11,12 +11,24 @@ namespace TheTime.OpenWeatherMap
     class APIWorker
     {
         System.Xml.XmlNodeList forecastsList;
-        public DataAccessLevel.Forecast GetWeather(string city, string region, string country)
+        public DataAccessLevel.Forecast GetWeather(string city, string owmid)
         {
             // получаем прогноз на 10 дней вперед с сервера
             XmlDocument xDoc = new XmlDocument();
-            xDoc.Load("http://api.openweathermap.org/data/2.5/forecast?&q=" + city + "," + country + "&mode=xml&units=metric&cnt=10&lang=ru");
 
+            if (owmid.Length > 0)
+            {
+                // запрос по id
+                xDoc.Load("http://api.openweathermap.org/data/2.5/forecast?&id=" + owmid + "&mode=xml&units=metric&cnt=10&lang=ru");
+
+            }
+            else
+            { 
+                // по названию города
+                xDoc.Load("http://api.openweathermap.org/data/2.5/forecast?&q=" + city + "," + "Россия" + "&mode=xml&units=metric&cnt=10&lang=ru");
+
+            }
+           
             var Child1 = xDoc.ChildNodes;
             var Child2 = Child1[1].ChildNodes;
 
@@ -45,7 +57,12 @@ namespace TheTime.OpenWeatherMap
                 var attr = forecastsList[i].Attributes;
 
                 DateTime time = DateTime.Parse(forecastsList[i].Attributes.GetNamedItem("from").Value);
-             
+
+
+                NumberFormatInfo nfi = new CultureInfo("ru-RU", false).NumberFormat;
+                nfi.NumberDecimalSeparator = ".";
+                double temp;
+
                 var weatherPar = forecastsList[i].ChildNodes;
                 for (int k = 0; k < weatherPar.Count; k++)
                 {
@@ -60,16 +77,16 @@ namespace TheTime.OpenWeatherMap
                             windDirection = DecodeWindDirection(weatherPar[k].Attributes.GetNamedItem("code").Value);
                             break;
                         case "windSpeed":
-                            windSpeed = weatherPar[k].Attributes.GetNamedItem("mps").Value;
+                            temp = Double.Parse(weatherPar[k].Attributes.GetNamedItem("mps").Value, nfi);
+                            windSpeed = ((int)temp).ToString();
                             break;
-                        case "temperature":
-                            temperature = (weatherPar[k].Attributes.GetNamedItem("value").Value).Remove(weatherPar[k].Attributes.GetNamedItem("value").Value.IndexOf('.'), weatherPar[k].Attributes.GetNamedItem("value").Value.Count() - weatherPar[k].Attributes.GetNamedItem("value").Value.IndexOf('.'));
+                        case "temperature":                                                      
+                            temp = Double.Parse(weatherPar[k].Attributes.GetNamedItem("value").Value, nfi);
+                            temperature = ((int)temp).ToString();
                             break;
-                        case "pressure":
-                            NumberFormatInfo nfi = new CultureInfo("ru-RU", false).NumberFormat;
-                            nfi.NumberDecimalSeparator = ".";
-                            double x = Double.Parse(weatherPar[k].Attributes.GetNamedItem("value").Value, nfi) * 0.75;
-                            pressure = ((int)x).ToString();
+                        case "pressure": 
+                            temp = Double.Parse(weatherPar[k].Attributes.GetNamedItem("value").Value, nfi) * 0.75;
+                            pressure = ((int)temp).ToString();
                             break;
                         case "humidity":
                             humidity = weatherPar[k].Attributes.GetNamedItem("value").Value;

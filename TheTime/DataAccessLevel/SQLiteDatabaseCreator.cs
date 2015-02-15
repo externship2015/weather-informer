@@ -53,7 +53,7 @@ namespace TheTime.DataAccessLevel
                                     [name]        varchar(100)       NOT NULL,
                                     [regionID]    integer            NULL, 
                                     [yandexID]    integer            NULL,
-                                    [owmID]       integer            NULL
+                                    [owmID]       varchar(100)       NULL
                                     );";
                 command.ExecuteNonQuery();
 

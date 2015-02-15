@@ -110,19 +110,39 @@ namespace TheTime
         private void button1_Click(object sender, EventArgs e)
         {
             //FillComboBox2(regionid, tempid);
-            sdc.cityID = yacityId;
-            if (radioButton1.Checked == true)
-                sdc.sourceID = 2;
-            else
-                sdc.sourceID = 1;
-            sdc.saveDate = DateTime.Now.Date;
+            yacityId = CheckBeforeSave(comboBox2.Text, comboBox1.Text);
+            if (yacityId != 0 && yacityId!=1)
+            {
 
-            string s = "";
-            SQLiteDatabaseWorker worker = new SQLiteDatabaseWorker();
-            worker.SetConnect(Program.DBName);
-            worker.SaveSettings(sdc);
-            worker.CloseConnect();
-            this.Close();
+
+                sdc.cityID = yacityId;
+                if (radioButton1.Checked == true)
+                    sdc.sourceID = 2;
+                else
+                    sdc.sourceID = 1;
+                sdc.saveDate = DateTime.Now.Date;
+
+                string s = "";
+                SQLiteDatabaseWorker worker = new SQLiteDatabaseWorker();
+                worker.SetConnect(Program.DBName);
+                worker.SaveSettings(sdc);
+                worker.CloseConnect();
+                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+               // this.Close();
+
+            }
+            else
+            {
+                if (yacityId == 1)
+                {
+                    comboBox2.BackColor = Color.LightPink;
+                }
+                if (yacityId == 0)
+                {
+                    comboBox2.BackColor = Color.LightPink;
+                    comboBox1.BackColor = Color.LightPink;
+                }
+            }
 
             
         }
@@ -200,6 +220,30 @@ namespace TheTime
             return st1;
 
         }
+
+        public int CheckBeforeSave(string city, string region)
+        {
+            int regid =0;
+            int citid = 0;
+            foreach (var item in rsl.regionsList.Where(s=>s.name==region))
+            {
+                regid = item.regionID;
+                citid = 1;
+                break;
+            }
+            if (regid != 0)
+            {
+                foreach (var item in rsl.citiesList.Where(s => s.regionID == regid && s.name == city))
+                {
+                    citid = item.yandexID;
+                    break;
+                }
+            }
+            else { return 0; }
+            return citid;
+
+        }
+        
         
     }
 }

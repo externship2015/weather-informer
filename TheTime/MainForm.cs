@@ -64,7 +64,28 @@ namespace TheTime
             return forecast;
         }
 
-
+        void GridView2 (DateTime Select_day)
+        {
+            DataAccessLevel.Forecast tag1 = new DataAccessLevel.Forecast();
+            tag1 = GetForecat();
+            int day = Select_day.Day - tag1.hourlyList[0].periodDate.Day;
+            //MessageBox.Show(Convert.ToString(day));
+            for (int i = 0; i < 4; i++)
+            {
+                if (i != 3)
+                dataGridView2.Rows.Add();
+                dataGridView2.Rows[i].Height = 34;
+                dataGridView2.Rows[i].Cells[0].Value = tag1.dailyList[i+day*4].temperature;
+                Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(tag1.dailyList[i + day * 4].symbol);
+                dataGridView2.Rows[i].Cells[1].Value = myIcon;
+                dataGridView2.Rows[i].Cells[2].Value = tag1.dailyList[i + day * 4].windSpeed;
+                dataGridView2.Rows[i].Cells[3].Value = tag1.dailyList[i + day * 4].pressure;
+                dataGridView2.Rows[i].Cells[4].Value = tag1.dailyList[i + day * 4].hummidity;
+            }
+            
+            int total_height = 34 * 4+62; // высота dataGrubview
+            dataGridView2.Height = total_height;
+}
 
 
 
@@ -137,7 +158,10 @@ namespace TheTime
             }
             int total_height = 22 * 8 + 47;
             dataGridView1.Height = total_height;
-            int day =0;
+            GridView2(tag1.hourlyList[0].periodDate);
+            
+            
+            /*int day =0;
             for (int i = 0; i < 4; i++)
             {
                 if (i != 3)
@@ -152,7 +176,7 @@ namespace TheTime
             }
             total_height = 34 * 4+62; // высота dataGrubview
             dataGridView2.Height = total_height;
-
+            */
 
             int Kol = 10;
 GroupBox[] tb = new GroupBox[Kol];
@@ -354,9 +378,22 @@ GroupBox[] tb = new GroupBox[Kol];
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (monthCalendar1.Visible == false)
+            {
                 monthCalendar1.Visible = true;
+                monthCalendar1.MinDate = monthCalendar1.TodayDate;
+                monthCalendar1.MaxDate = monthCalendar1.TodayDate.AddDays(10);
+            }
             else
+            {
                 monthCalendar1.Visible = false;
+                GridView2(monthCalendar1.SelectionStart);
+                //MessageBox.Show(Convert.ToString(monthCalendar1.SelectionStart));
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

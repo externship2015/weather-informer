@@ -8,7 +8,7 @@ namespace TheTime
 {
     static class Program
     {
-        public static string DBName = @"d:\InformerDataBase2.db";
+        public static string DBName = @"C:\\C#\\Application\\SimSoft\\weather-informer\\TheTime\\InformerDataBase2.db";
         public static SettingsData setData = new SettingsData();
        // public static DataWorkerDataContext data = new DataWorkerDataContext();
         /// <summary>

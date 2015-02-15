@@ -30,6 +30,44 @@ namespace TheTime
             InitializeComponent();
         }
 
+
+
+
+        public DataAccessLevel.Forecast GetForecat()
+        {
+            DataAccessLevel.Forecast forecast = new DataAccessLevel.Forecast();
+
+            // получаем текущий город из настроек
+            DataAccessLevel.SQLiteDatabaseWorker worker = new DataAccessLevel.SQLiteDatabaseWorker();
+            worker.SetConnect(Program.DBName);
+            DataAccessLevel.SettingsDataContext sdc = worker.GetSettings(); // настройки
+            worker.CloseConnect();
+         
+            // sdc.cityID - id выбранного города
+            // sdc.ID - id настройки
+
+
+
+            // получаем текущее время - нужен id текущий города на яндексе
+            Date_Time.GetTime getter = new Date_Time.GetTime();
+            DateTime CurDate = getter.Yandex_Time(sdc.cityID);
+
+            // получаем прогноз с яндекса (по ID города)
+            DataAccessLevel.Forecast yandexForecast = new DataAccessLevel.Forecast();
+            Yandex.YandexMethods yaworker = new Yandex.YandexMethods();
+            forecast = yaworker.GetYandexForecast(sdc.cityID.ToString(), yandexForecast);
+            //MessageBox.Show(Convert.ToString(sdc.cityID));
+            
+            int a = 0;
+
+
+            return forecast;
+        }
+
+
+
+
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             
@@ -77,24 +115,97 @@ namespace TheTime
             CurRegion = "Ульяновская область";
 
             //------Заполнение  GRIDVIEW
+            
+
+            DataAccessLevel.Forecast tag1 = new DataAccessLevel.Forecast();
+            tag1 = GetForecat();
+            
+            linkLabel2.Text = DateTime.Parse(Convert.ToString(tag1.hourlyList[0].periodDate)).ToLongDateString();
 
             for (int i = 0; i < 8; i++)
             {
-                string id = ww1.GetCityIdString(CurCountry, CurRegion, CurSity, listOfCities);
-                string ss = "";
                 int t = 3*i;
-                listOfFacts = ww1.GetFactWeather(id);
                 if (i!=7)
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells[0].Value = (t).ToString()+":00";
-                dataGridView1.Rows[i].Cells[1].Value = listOfFacts[0].temp;
-                Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(listOfFacts[0].pic);
+                dataGridView1.Rows[i].Cells[1].Value = tag1.hourlyList[i].temperature;
+                Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(tag1.hourlyList[i].symbol);
                 dataGridView1.Rows[i].Cells[2].Value = myIcon;
-                dataGridView1.Rows[i].Cells[3].Value = listOfFacts[0].wind_speed;
-                dataGridView1.Rows[i].Cells[4].Value = listOfFacts[0].pressure;
-                dataGridView1.Rows[i].Cells[5].Value = listOfFacts[0].humidity;               
+                dataGridView1.Rows[i].Cells[3].Value = tag1.hourlyList[i].windSpeed;
+                dataGridView1.Rows[i].Cells[4].Value = tag1.hourlyList[i].pressure;
+                dataGridView1.Rows[i].Cells[5].Value = tag1.hourlyList[i].hummidity;               
             }
+            int total_height = 22 * 8 + 47;
+            dataGridView1.Height = total_height;
+            int day =0;
+            for (int i = 0; i < 4; i++)
+            {
+                if (i != 3)
+                    dataGridView2.Rows.Add();
+                dataGridView2.Rows[i].Height = 34;
+                dataGridView2.Rows[i].Cells[0].Value = tag1.dailyList[i+day*4].temperature;
+                Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(tag1.dailyList[i + day * 4].symbol);
+                dataGridView2.Rows[i].Cells[1].Value = myIcon;
+                dataGridView2.Rows[i].Cells[2].Value = tag1.dailyList[i + day * 4].windSpeed;
+                dataGridView2.Rows[i].Cells[3].Value = tag1.dailyList[i + day * 4].pressure;
+                dataGridView2.Rows[i].Cells[4].Value = tag1.dailyList[i + day * 4].hummidity;
+            }
+            total_height = 34 * 4+62; // высота dataGrubview
+            dataGridView2.Height = total_height;
+
+
+            int Kol = 10;
+GroupBox[] tb = new GroupBox[Kol];
+            PictureBox[] tb1 = new PictureBox[Kol];
+            Label[] mor = new Label[Kol*2];
+            Label[] tem = new Label[Kol * 2];
+            for (int i = 0; i < Kol; i++)
+            {
+                tb[i] = new System.Windows.Forms.GroupBox();
+                mor[i * 2] = new System.Windows.Forms.Label();
+                mor[i * 2+1] = new System.Windows.Forms.Label();
+                tem[i * 2] = new System.Windows.Forms.Label();
+                tem[i * 2+1] = new System.Windows.Forms.Label();
+                
+                tb[i].Location = new System.Drawing.Point(6 + 85*i, 7);
+                tb[i].Name = "groupboxes" + i.ToString();
+                tb[i].Size = new System.Drawing.Size(81, 53);
+                tb[i].TabIndex = i;
+                tb[i].Text = DateTime.Parse(Convert.ToString(tag1.tenDaysList[i*2].periodDate)).ToShortDateString();
+                
+                mor[i*2].Text = "День";
+        //        mor[i*2].Location = new System.Drawing.Point(30 + 85 * i, 16);
+                mor[i * 2].Size = new System.Drawing.Size(34, 13);
+                
+                mor[i * 2+1].Text = "Ночь";
+      //          mor[i * 2+1].Location = new System.Drawing.Point(31 + 85 * i, 32);
+                mor[i * 2+1].Size = new System.Drawing.Size(32, 13);
+
+                tem[i * 2].Text = tag1.tenDaysList[i].temperature;
+//                tem[i * 2].Location = new System.Drawing.Point(64 + 85 * i, 17);
+                tem[i * 2].Size = new System.Drawing.Size(30, 13);
+
+                tem[i*2+1].Text = tag1.tenDaysList[i+1].temperature;
+  //              tem[i * 2+1].Location = new System.Drawing.Point(63 + 85 * i, 33);
+                tem[i * 2+1].Size = new System.Drawing.Size(30, 13);
+
+                tb1[i] = new System.Windows.Forms.PictureBox();
+    //            tb1[i].Location = new System.Drawing.Point(2 + 85 * i, 19);
+                tb1[i].Name = "pictureboxes" + i.ToString();
+                tb1[i].Size = new System.Drawing.Size(28, 28);
+                Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject("ovc");
+                tb1[i].Image = myIcon;
+
+                tabPage3.Controls.Add(tb[i]);
+                tb[i].Controls.Add(tem[i * 2]);
+                tb[i].Controls.Add(tem[i * 2+1]);
+                tb[i].Controls.Add(mor[i * 2]);
+                tb[i].Controls.Add(mor[i * 2+1]);
+                tb[i].Controls.Add(tb1[i]);
+                
             
+            }
+
 
             //service = "owm";
             ////    cnt = (int)sets.First().forecastDaysCount;
@@ -223,6 +334,29 @@ namespace TheTime
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void tabPage3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (monthCalendar1.Visible == false)
+                monthCalendar1.Visible = true;
+            else
+                monthCalendar1.Visible = false;
         }
     }
 }

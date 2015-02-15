@@ -9,7 +9,7 @@ namespace TheTime
     static class Program
     {
 
-        public static string DBName = @"D:\Database.db";
+        public static string DBName = @"Database.db";
 
         public static SettingsData setData = new SettingsData();
        // public static DataWorkerDataContext data = new DataWorkerDataContext();

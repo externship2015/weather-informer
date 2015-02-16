@@ -26,7 +26,10 @@ namespace TheTime
         public Settings()
         {
             InitializeComponent();
-             rsl= ym.GetRegionCitiesList();
+            SQLiteDatabaseWorker SQLworker = new SQLiteDatabaseWorker();
+            SQLworker.SetConnect(Program.DBName);
+            rsl = SQLworker.GetCitiesList();
+            SQLworker.CloseConnect();
         }
 
         private void Settings_Load(object sender, EventArgs e)

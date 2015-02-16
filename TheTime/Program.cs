@@ -11,7 +11,7 @@ namespace TheTime
 
         public static string DBName = @"Database.db";
 
-        public static SettingsData setData = new SettingsData();
+        
        // public static DataWorkerDataContext data = new DataWorkerDataContext();
         /// <summary>
         /// Главная точка входа для приложения.
@@ -21,12 +21,14 @@ namespace TheTime
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new TreyTest());
+            
             //Application.Run(new OpenWeatherMap.Form1());
             
             //Application.Run(new Date_Time.Test());
             //Application.Run(new TheTime.OpenWeatherMap.Form1());
             Application.Run(new MainForm());
-           // Application.Run(new Settings());
+            //Application.Run(new Settings());
             //Application.Run(new TheTime.DataAccessLevel.Form1());
             //Application.Run(new MainForm2());
             //Application.Run(new TheTime.ПапкаАндрея.FormAndrew());

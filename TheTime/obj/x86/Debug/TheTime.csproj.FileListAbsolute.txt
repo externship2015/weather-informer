@@ -34,7 +34,6 @@ D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.pdb
 D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.exe
 D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.pdb
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.csprojResolveAssemblyReference.cache
-D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Form1.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
 D:\Diplom\TheTime\TheTime\bin\Debug\TheTime.exe.config
@@ -53,7 +52,6 @@ D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.MainForm.reso
 D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.OWM.resources
 D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.Properties.Resources.resources
 D:\СИМБИРСОФТ\ТАЙМ1002\TheTime\obj\x86\Debug\TheTime.csproj.GenerateResource.Cache
-D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.ПапкаАндрея.FormAndrew.resources
 C:\C#\Application\SimSoft\weather-informer\TheTime\bin\Debug\TheTime.exe.config
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.exe
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.pdb
@@ -127,3 +125,4 @@ C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.DataAcc
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.Date_Time.Test.resources
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.OpenWeatherMap.Form1.resources
 C:\C#\Application\SimSoft\weather-informer\TheTime\obj\x86\Debug\TheTime.csprojResolveAssemblyReference.cache
+D:\Diplom\TheTime\TheTime\obj\x86\Debug\TheTime.TreyTest.resources

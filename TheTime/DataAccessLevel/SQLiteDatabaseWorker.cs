@@ -262,7 +262,7 @@ namespace TheTime.DataAccessLevel
             }
 
             // получаем прогноз на день
-            sql = "SELECT * FROM 'daily_forecasts' WHERE settingId = '" + sdc.ID + "' AND periodDate = '" + Current.Date.ToString() + "' ;";
+            sql = "SELECT * FROM 'daily_forecasts' WHERE settingId = '" + sdc.ID + "' AND (periodDate = '" + Current.Date.ToString() + "' OR periodDate = '" + Current.AddDays(1).Date.ToString() + "' OR periodDate = '" + Current.AddDays(2).Date.ToString() + "' OR periodDate = '" + Current.AddDays(3).Date.ToString() + "' OR periodDate = '" + Current.AddDays(4).Date.ToString() + "' OR periodDate = '" + Current.AddDays(5).Date.ToString() + "' OR periodDate = '" + Current.AddDays(6).Date.ToString() + "' OR periodDate = '" + Current.AddDays(7).Date.ToString() + "' OR periodDate = '" + Current.AddDays(8).Date.ToString() + "' OR periodDate = '" + Current.AddDays(9).Date.ToString() + "' );";
             // должны получить 4 записи
             command = new SQLiteCommand(sql, m_dbConnection);
             reader = command.ExecuteReader();

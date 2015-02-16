@@ -138,10 +138,11 @@ namespace TheTime
         #region Рисуем форму
         void GridView(DataAccessLevel.Forecast tag1)
         {
+            dataGridView1.RowCount = 8;
             for (int i = 0; i < tag1.hourlyList.Count; i++)
             {
-                if (i != tag1.hourlyList.Count - 1)
-                    dataGridView1.Rows.Add();
+                //if (i != tag1.hourlyList.Count - 1)
+                    //dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells[0].Value = tag1.hourlyList[i].periodTime + ":00";
                 dataGridView1.Rows[i].Cells[1].Value = tag1.hourlyList[i].temperature;
                 string buf = tag1.hourlyList[i].symbol.Replace("-", "0").Replace("+", "1");
@@ -165,11 +166,12 @@ namespace TheTime
         {
             DataAccessLevel.Forecast tag1 = forecast;
             int day = Select_day.Day - tag1.hourlyList[0].periodDate.Day;
+            dataGridView2.RowCount = 4;
             //MessageBox.Show(Convert.ToString(day));
             for (int i = 0; i < 4; i++)
             {
-                if (i != tag1.dailyList.Count-1)
-                dataGridView2.Rows.Add();
+                //if (i != tag1.dailyList.Count-1)
+                //dataGridView2.Rows.Add();
                 dataGridView2.Rows[i].Height = 34;
                 dataGridView2.Rows[i].Cells[0].Value = tag1.dailyList[i + day * 4].timeOfDay;
                 dataGridView2.Rows[i].Cells[1].Value = tag1.dailyList[i + day * 4].temperature;

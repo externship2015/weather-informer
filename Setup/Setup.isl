@@ -343,6 +343,8 @@
 		<row><td>ISX_DEFAULTCOMPONENT</td><td>{38B6828B-51F1-4044-AFDA-0B5852BC5B35}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{B5AEDDBD-FBCF-4596-B26E-89B75CCAC6A0}</td><td>X64</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{79883825-AE14-4A4E-B4F2-C2ABC6D86133}</td><td>X86</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{E9658696-CFF8-4306-BBD2-3171A25AA292}</td><td>AppDataFolder</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{1FCF66F9-5480-44A8-83CE-D1AEA3DF8E56}</td><td>CommonFilesFolder</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>SQLite.Interop.dll</td><td>{4D4D8533-19D5-45C4-AED2-707475669B2A}</td><td>X64</td><td>2</td><td/><td>sqlite.interop.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>SQLite.Interop.dll1</td><td>{9CBD9F27-4A72-43F8-8B54-6CE42297F5BF}</td><td>X86</td><td>2</td><td/><td>sqlite.interop.dll1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>System.Data.SQLite.EF6.dll</td><td>{A958F29C-706D-4A4B-8E46-7B79823AA0D2}</td><td>INSTALLDIR</td><td>2</td><td/><td>system.data.sqlite.ef6.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1878,6 +1880,8 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT2</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT3</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT4</td></row>
 		<row><td>AlwaysInstall</td><td>SQLite.Interop.dll</td></row>
 		<row><td>AlwaysInstall</td><td>SQLite.Interop.dll1</td></row>
 		<row><td>AlwaysInstall</td><td>System.Data.SQLite.EF6.dll</td></row>
@@ -1899,6 +1903,8 @@
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
 		<row><td>database.db</td><td>ISX_DEFAULTCOMPONENT</td><td>Database.db</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\Database.db</td><td>1</td><td/></row>
+		<row><td>database.db1</td><td>ISX_DEFAULTCOMPONENT3</td><td>Database.db</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\Database.db</td><td>1</td><td/></row>
+		<row><td>database.db2</td><td>ISX_DEFAULTCOMPONENT4</td><td>Database.db</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\Database.db</td><td>1</td><td/></row>
 		<row><td>sqlite.interop.dll</td><td>SQLite.Interop.dll</td><td>SQLITE~1.DLL|SQLite.Interop.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\x64\SQLite.Interop.dll</td><td>1</td><td/></row>
 		<row><td>sqlite.interop.dll1</td><td>SQLite.Interop.dll1</td><td>SQLITE~1.DLL|SQLite.Interop.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\x86\SQLite.Interop.dll</td><td>1</td><td/></row>
 		<row><td>system.data.sqlite.dll</td><td>System.Data.SQLite.dll</td><td>SYSTEM~1.DLL|System.Data.SQLite.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\System.Data.SQLite.dll</td><td>1</td><td/></row>
@@ -2052,6 +2058,8 @@
 		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_A6B41D8D_4190_40F8_8034_F60BC2E08055_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_9C7C6F2A_6C6B_4C6E_96C0_041C8FC41EED_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_B392E4BC_DAF6_43EF_A024_6562EB4F9EF3_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_4AFADDCE_B5CC_481C_B553_F3292D7F7E4C_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_DCDA2797_D03E_4911_9201_C009E0A5497A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>SQLite.Interop.dll</td><td/><td/><td>_28635F4F_8B71_47FD_8F45_D1582D6613E1_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>SQLite.Interop.dll1</td><td/><td/><td>_E34C8A29_D1BD_46B3_A658_6290721885F2_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>System.Data.SQLite.EF6.dll</td><td/><td/><td>_B0F7F495_6705_4D15_944D_F32E3C628A3C_FILTER</td><td/><td/><td/><td/></row>

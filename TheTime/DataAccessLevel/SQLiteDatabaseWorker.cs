@@ -272,7 +272,7 @@ namespace TheTime.DataAccessLevel
                 DailyForecastsDataContext context = new DailyForecastsDataContext();
                 context.description = record["description"].ToString();
                 context.hummidity = record["hummidity"].ToString();
-                context.periodDate = Current;
+                context.periodDate = DateTime.Parse(record["periodDate"].ToString());
                 context.pressure = record["pressure"].ToString();
                 context.settingID = int.Parse(record["settingID"].ToString());
                 context.symbol = record["symbol"].ToString();
@@ -290,7 +290,7 @@ namespace TheTime.DataAccessLevel
             foreach (DbDataRecord record in reader)
             {
                 TenDaysForecastsDataContext context = new TenDaysForecastsDataContext();
-                context.periodDate = Current;
+                context.periodDate = DateTime.Parse(record["periodDate"].ToString());
                 context.settingID = int.Parse(record["settingID"].ToString());
                 context.symbol = record["symbol"].ToString();
                 context.temperature = record["temperature"].ToString();

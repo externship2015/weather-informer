@@ -9,7 +9,7 @@ namespace TheTime
     static class Program
     {
 
-        public static string DBName = @"Database.db";
+        public static string DBName = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Database.db";
 
         
        // public static DataWorkerDataContext data = new DataWorkerDataContext();
@@ -19,6 +19,8 @@ namespace TheTime
         [STAThread]
         static void Main()
         {
+            string applicationDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new TreyTest());

@@ -13,18 +13,20 @@ using TheTime.OpenWeatherMap;
 namespace TheTime
 {
     public partial class MainForm : Form
+
     {
         string CurIcon = "_01d";
         string CurTemp = "5";
         string CurDesc = "солнечно";
 
-        DataAccessLevel.Forecast forecast = new DataAccessLevel.Forecast();
 
+        DataAccessLevel.Forecast forecast = new DataAccessLevel.Forecast();
+                
         public MainForm()
         {
             InitializeComponent();
-
-        }
+            
+        }       
 
         #region Получаем прогноз
         public DataAccessLevel.Forecast GetForecat(string path)
@@ -138,17 +140,18 @@ namespace TheTime
         #region Рисуем форму
         void GridView(DataAccessLevel.Forecast tag1)
         {
-            this.Invoke(new Action(dataGridView1.Rows.Clear));
-            dataGridView1.RowCount = 8;
+            //this.Invoke (new Action (dataGridView1.Rows.Clear));
+            dataGridView1.Rows.Clear();
+            dataGridView1.RowCount = tag1.hourlyList.Count;
             for (int i = 0; i < tag1.hourlyList.Count; i++)
             {
                 //if (i != tag1.hourlyList.Count - 1)
-                //dataGridView1.Rows.Add();
+                    //dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells[0].Value = tag1.hourlyList[i].periodTime + ":00";
                 dataGridView1.Rows[i].Cells[1].Value = tag1.hourlyList[i].temperature;
                 string buf = tag1.hourlyList[i].symbol.Replace("-", "0").Replace("+", "1");
                 Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(buf);
-
+                
                 dataGridView1.Rows[i].Cells[2].Value = myIcon;
                 dataGridView1.Rows[i].Cells[3].Value = tag1.hourlyList[i].windSpeed;
                 dataGridView1.Rows[i].Cells[4].Value = tag1.hourlyList[i].pressure;
@@ -163,17 +166,19 @@ namespace TheTime
         }
 
 
-        void GridView2(DateTime Select_day)
+        void GridView2 (DateTime Select_day)
         {
-            this.Invoke(new Action(dataGridView2.Rows.Clear));
+            
             DataAccessLevel.Forecast tag1 = forecast;
             int day = Select_day.Day - tag1.hourlyList[0].periodDate.Day;
             dataGridView2.RowCount = 4;
+            monthCalendar1.MaxDate = monthCalendar1.TodayDate.AddDays(tag1.tenDaysList.Count() / 2 - 1);
             //MessageBox.Show(Convert.ToString(day));
             for (int i = 0; i < 4; i++)
             {
                 //if (i != tag1.dailyList.Count-1)
                 //dataGridView2.Rows.Add();
+                
                 dataGridView2.Rows[i].Height = 34;
                 dataGridView2.Rows[i].Cells[0].Value = tag1.dailyList[i + day * 4].timeOfDay;
                 dataGridView2.Rows[i].Cells[1].Value = tag1.dailyList[i + day * 4].temperature;
@@ -185,14 +190,15 @@ namespace TheTime
                 if (i == tag1.dailyList.Count - 1)
                     break;
             }
-
-            int total_height = 34 * 4 + 62; // высота dataGrubview
+            
+            int total_height = 34 * 4+62; // высота dataGrubview
             dataGridView2.Height = total_height;
         }
 
         void GroupTag(DataAccessLevel.Forecast tag1)
         {
-            this.Invoke(new Action(tabPage3.Controls.Clear));
+            //this.Invoke(new Action(tabPage3.Controls.Clear));
+            tabPage3.Controls.Clear();
             int Kol = tag1.tenDaysList.Count / 2;
             GroupBox[] tb = new GroupBox[Kol];
             PictureBox[] tb1 = new PictureBox[Kol];
@@ -220,7 +226,7 @@ namespace TheTime
                 tb[i].Size = new System.Drawing.Size(75, 77);
                 tb[i].TabIndex = i;
                 tb[i].Text = DateTime.Parse(Convert.ToString(tag1.tenDaysList[i * 2].periodDate)).ToShortDateString();
-
+                
                 mor[i * 2].Text = "День";
                 mor[i * 2].Location = new System.Drawing.Point(30, 16);
                 mor[i * 2].Size = new System.Drawing.Size(34, 13);
@@ -270,7 +276,7 @@ namespace TheTime
             label2.Text = "Температура воздуха " + forecast.curWeather.temperature + " С";
             label3.Text = "Скорость ветра " + forecast.curWeather.windSpeed + " м/с";
             label8.Text = "Направление ветра " + forecast.curWeather.windDirection;
-            label9.Text = "Влажность воздуха " + forecast.curWeather.hummidity + "%";
+            label9.Text = "Влажность воздуха " + forecast.curWeather.hummidity + "%";            
             label10.Text = "Атм. давление " + forecast.curWeather.pressure + "мм рт. ст.";
 
             // сохраняем текущие данные для трея
@@ -282,6 +288,7 @@ namespace TheTime
             linkLabel2.Text = DateTime.Parse(Convert.ToString(forecast.hourlyList[0].periodDate)).ToLongDateString();
             // Сегодняшняя Дата календаря = информации из яндекса или owm
             monthCalendar1.TodayDate = forecast.hourlyList[0].periodDate;
+            
         }
 
         void RefreshForm(DataAccessLevel.Forecast forecast)
@@ -302,12 +309,12 @@ namespace TheTime
             { 
             
             }
-            
+
         }
 
         #endregion
-
-
+       
+            
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.Size = new System.Drawing.Size(676, 91);
@@ -315,26 +322,43 @@ namespace TheTime
             tabControl1.Visible=false;
             groupBox1.Visible=false;
             this.ControlBox = false;
+
+            //forecast = GetForecat(Program.DBName);
+            //RefreshForm(forecast);
+
+            ////-----Сворачиваем форму при запуске в трей----
+            //this.WindowState = FormWindowState.Minimized;
+            //DeactivateForm();                       
+            
+            
+            ////------------вешаем ТАЙМЕР------------- 
+            //int num = 1; //
+            //timer1.Enabled = true;
+            ////TimerCallback tm = new TimerCallback(Count);
+            //// раз в час
+            ////System.Threading.Timer timer = new System.Threading.Timer(tm, num, 0, 3600000);  
+
         }
-
-
-
+        
+        
+        
         /// <summary>
         ////Callback method for timer
         /// </summary>
         /// <param name="obj"></param>
-        public void Count(object obj)
+        /*public void Count(object obj)
         {
             //Вызывать методы запросов сервисов и записи в БД
             forecast = GetForecat(Program.DBName);
             RefreshForm(forecast);
             //MessageBox.Show("hello");
-        }
+        }*/
 
         private void linkLabel1_Click(object sender, EventArgs e)
         {
-            Settings form = new Settings();
+            Settings form = new Settings();            
             if (form.ShowDialog() == DialogResult.OK)
+
             {
                 this.Size = new System.Drawing.Size(676, 91);
                 progressBar1.Visible = true;
@@ -355,7 +379,7 @@ namespace TheTime
 
         private void notifyIcon1_Click(object sender, EventArgs e)
         {
-
+          
         }
 
         private void MainForm_Deactivate(object sender, EventArgs e)
@@ -364,8 +388,8 @@ namespace TheTime
         }
 
         public void DeactivateForm()
-        {
-
+        {            
+            
             Bitmap bmp = new Bitmap((Image)TheTime.Properties.Resources.ResourceManager.GetObject(CurIcon));
             float size = 20;
             Font f = new Font(this.Font.FontFamily.Name, size, FontStyle.Bold);
@@ -384,7 +408,7 @@ namespace TheTime
             }
         }
 
-
+      
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (monthCalendar1.Visible == false)
@@ -392,7 +416,7 @@ namespace TheTime
 
                 monthCalendar1.Visible = true;
                 monthCalendar1.MinDate = monthCalendar1.TodayDate;
-                monthCalendar1.MaxDate = monthCalendar1.TodayDate.AddDays(9);
+                
             }
             else
             {
@@ -449,10 +473,15 @@ namespace TheTime
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
-
+            //int i = Convert.ToInt16(textBox1.Text);
+            //textBox1.Text = Convert.ToString(i + 1);
+            forecast = GetForecat(Program.DBName);
+            RefreshForm(forecast);
+            timer1.Enabled = true;
         }
+
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
@@ -473,10 +502,10 @@ namespace TheTime
 
 
             //------------вешаем ТАЙМЕР------------- 
-            int num = 1; //
-            TimerCallback tm = new TimerCallback(Count);
+            timer1.Enabled = true;
+            ////TimerCallback tm = new TimerCallback(Count);
             // раз в час
-            System.Threading.Timer timer = new System.Threading.Timer(tm, num, 0, 3600000);
+            //System.Threading.Timer timer = new System.Threading.Timer(tm, num, 0, 3600000);
         }
 
         public DataAccessLevel.Forecast GetForecat(string path, ProgressBar pb)
@@ -583,6 +612,7 @@ namespace TheTime
                 return forecast;
             }
         }
+
 
     }
 }

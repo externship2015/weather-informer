@@ -9,8 +9,8 @@ namespace TheTime
     static class Program
     {
 
+        //public static string DBName = @"D:/Database.db";
         public static string DBName = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Database.db";
-
         
        // public static DataWorkerDataContext data = new DataWorkerDataContext();
         /// <summary>

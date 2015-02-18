@@ -14,9 +14,9 @@ namespace TheTime
 {
     public partial class MainForm : Form
     {
-        string CurIcon = "";
-        string CurTemp = "";
-        string CurDesc = "";
+        string CurIcon = "_01d";
+        string CurTemp = "5";
+        string CurDesc = "солнечно";
 
         DataAccessLevel.Forecast forecast = new DataAccessLevel.Forecast();
 
@@ -310,19 +310,11 @@ namespace TheTime
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            forecast = GetForecat(Program.DBName);
-            RefreshForm(forecast);
-
-            //-----Сворачиваем форму при запуске в трей----
-            this.WindowState = FormWindowState.Minimized;
-            DeactivateForm();
-
-
-            //------------вешаем ТАЙМЕР------------- 
-            int num = 1; //
-            TimerCallback tm = new TimerCallback(Count);
-            // раз в час
-            System.Threading.Timer timer = new System.Threading.Timer(tm, num, 0, 3600000);
+            this.Size = new System.Drawing.Size(676, 91);
+            progressBar1.Visible = true;
+            tabControl1.Visible=false;
+            groupBox1.Visible=false;
+            this.ControlBox = false;
         }
 
 
@@ -344,8 +336,20 @@ namespace TheTime
             Settings form = new Settings();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                forecast = GetForecat(Program.DBName);
+                this.Size = new System.Drawing.Size(676, 91);
+                progressBar1.Visible = true;
+                tabControl1.Visible = false;
+                groupBox1.Visible = false;
+                this.ControlBox = false;
+                forecast = GetForecat(Program.DBName,progressBar1);
+
                 RefreshForm(forecast);
+
+                this.Size = new System.Drawing.Size(676, 331);
+                progressBar1.Visible = false;
+                tabControl1.Visible = true;
+                groupBox1.Visible = true;
+                this.ControlBox = true;
             }
         }
 
@@ -448,6 +452,136 @@ namespace TheTime
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            forecast = GetForecat(Program.DBName,progressBar1);
+
+            this.Size = new System.Drawing.Size(676, 331);
+            progressBar1.Visible = false;
+            tabControl1.Visible = true;
+            groupBox1.Visible = true;
+            this.ControlBox = true;
+
+
+            RefreshForm(forecast);
+
+            //-----Сворачиваем форму при запуске в трей----
+            this.WindowState = FormWindowState.Minimized;
+            DeactivateForm();
+
+
+            //------------вешаем ТАЙМЕР------------- 
+            int num = 1; //
+            TimerCallback tm = new TimerCallback(Count);
+            // раз в час
+            System.Threading.Timer timer = new System.Threading.Timer(tm, num, 0, 3600000);
+        }
+
+        public DataAccessLevel.Forecast GetForecat(string path, ProgressBar pb)
+        {
+            DataAccessLevel.SQLiteDatabaseWorker worker = new DataAccessLevel.SQLiteDatabaseWorker();
+            DataAccessLevel.Forecast forecast = new DataAccessLevel.Forecast();
+
+            // получаем текущий город из настроек
+
+            worker.SetConnect(path);
+            DataAccessLevel.SettingsDataContext sdc = worker.GetSettings(); // настройки
+            worker.CloseConnect();
+
+            // sdc.cityID - id выбранного города
+            // sdc.ID - id настройки
+
+            try
+            {
+                HttpWebRequest reqFP = (HttpWebRequest)HttpWebRequest.Create("http://www.google.com");
+
+                HttpWebResponse rspFP = (HttpWebResponse)reqFP.GetResponse();
+                if (HttpStatusCode.OK == rspFP.StatusCode)
+                {
+                    // HTTP = 200 - Интернет безусловно есть! 
+                    rspFP.Close();
+
+                    DataAccessLevel.Forecast yandexForecast = new DataAccessLevel.Forecast();
+
+                    switch (sdc.sourceID)
+                    {
+                        case 1: // owm 
+                            // получаем город по ид яндекса GetCityByYaId
+                            worker.SetConnect(path);
+                            DataAccessLevel.CitiesDataContext city = worker.GetCityByYaId(sdc.cityID.ToString());
+                            worker.CloseConnect();
+                            // получаем прогноз owm по названию или owmid
+                            OpenWeatherMap.APIWorker owmworker = new APIWorker();
+                            DataAccessLevel.Forecast owmForecast = owmworker.GetWeather(city.name, city.owmID);
+
+                            // сохраняем в базу
+                            worker.SetConnect(path);
+                            worker.SaveForecast(owmForecast, pb);
+                            worker.CloseConnect();
+
+                            break;
+                        case 2: // яндекс
+                            // получаем прогноз с яндекса (по ID города яндекса)                    
+                            Yandex.YandexMethods yaworker = new Yandex.YandexMethods();
+                            yaworker.GetYandexForecast(sdc.cityID.ToString(), yandexForecast);
+
+                            // сохраняем в базу
+                            worker.SetConnect(path);
+                            worker.SaveForecast(yandexForecast, pb);
+                            worker.CloseConnect();
+                            //break;
+                            return yandexForecast;
+                        default:
+                            break;
+                    }
+
+                    // получаем текущее время - нужен id текущий города на яндексе
+                    Date_Time.GetTime getter = new Date_Time.GetTime();
+                    DateTime CurDate = getter.Yandex_Time(sdc.cityID);
+
+                    // получаем прогноз из базы по установленному в настройках серверу
+
+                    worker.SetConnect(path);
+                    forecast = worker.GetForecast(CurDate);
+                    worker.CloseConnect();
+
+
+                    return forecast;
+
+                }
+
+
+                else
+                {
+                    // сервер вернул отрицательный ответ, возможно что инета нет
+                    rspFP.Close();
+                    MessageBox.Show("Подключение к интернету ограничено, данные могут быть неточными");
+
+                    // получаем прогноз из базы по установленному в настройках серверу
+
+                    worker.SetConnect(path);
+                    forecast = worker.GetForecast(DateTime.Now);
+                    worker.CloseConnect();
+
+                    return forecast;
+
+                }
+            }
+            catch (WebException)
+            {
+                // Ошибка, значит интернета у нас нет. Плачем :'(
+                MessageBox.Show("Невозможно подключиться к интернету, данные могут быть неточными");
+
+                // получаем прогноз из базы по установленному в настройках серверу
+
+                worker.SetConnect(path);
+                forecast = worker.GetForecast(DateTime.Now);
+                worker.CloseConnect();
+
+                return forecast;
+            }
         }
 
     }

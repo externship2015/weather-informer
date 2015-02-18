@@ -289,9 +289,14 @@ namespace TheTime
             try
             {
                 CurWeather(forecast);
-                GridView(forecast);
-                GridView2(forecast.hourlyList[0].periodDate);
-                GroupTag(forecast);
+                if (forecast.dailyList.Count > 0 && forecast.hourlyList.Count > 0 && forecast.tenDaysList.Count > 0)
+                // проверка заполненности списков
+                {
+                    GridView(forecast);
+                    GridView2(forecast.hourlyList[0].periodDate);
+                    GroupTag(forecast);
+                }
+                else MessageBox.Show("Извините, нет данных. Требуется подключение к интернету");
             }
             catch (Exception ex)
             { 

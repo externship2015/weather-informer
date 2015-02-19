@@ -26,11 +26,11 @@ namespace TheTime
         public Settings()
         {
             InitializeComponent();
-            //SQLiteDatabaseWorker SQLworker = new SQLiteDatabaseWorker();
-            //SQLworker.SetConnect(Program.DBName);
-            //rsl = SQLworker.GetCitiesList();
-            //SQLworker.CloseConnect();
-            rsl = ym.GetRegionCitiesList();
+            SQLiteDatabaseWorker SQLworker = new SQLiteDatabaseWorker();
+            SQLworker.SetConnect(Program.DBName);
+            rsl = SQLworker.GetCitiesList();
+            SQLworker.CloseConnect();
+            //rsl = ym.GetRegionCitiesList();
         }
 
         private void Settings_Load(object sender, EventArgs e)
@@ -49,15 +49,7 @@ namespace TheTime
             if (sdc.sourceID == 2)
                 radioButton1.Checked = true;
             if (sdc.sourceID == 1)
-                radioButton2.Checked = true;            
-
-           
-
-
-
-
-
-
+                radioButton2.Checked = true;   
           
         }      
 

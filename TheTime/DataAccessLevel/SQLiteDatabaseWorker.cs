@@ -48,11 +48,33 @@ namespace TheTime.DataAccessLevel
         /// <param name="setObj">объект класса SettingsDataContext</param>       
         public void SaveSettings(SettingsDataContext setObj)
         {
-            string sql = @"INSERT INTO settings
-                                (cityID, sourseID, saveDate)
-                           VALUES ('" + setObj.cityID.ToString() + "', '" + setObj.sourceID.ToString() + "', '" + setObj.saveDate + "')";
+            // проверить наличие настройки с параметрами в базе
+            string sql = "SELECT * FROM settings WHERE cityID = '" + setObj.cityID + "' AND sourseID = '" + setObj.sourceID +"';";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-            command.ExecuteNonQuery();
+            SQLiteDataReader reader = command.ExecuteReader();
+            // считаем
+            int count = 0;
+            foreach (DbDataRecord record in reader)
+            {
+                count++;
+            }
+            if (count > 0)
+            {
+                // update
+                sql = @"UPDATE settings SET
+                        saveDate = '" + DateTime.Now + "' WHERE cityID = '" + setObj.cityID + "' AND sourseID = '" + setObj.sourceID + "';";
+                command = new SQLiteCommand(sql, m_dbConnection);
+                command.ExecuteNonQuery();
+            }
+            else
+            { 
+                // insert
+                sql = @"INSERT INTO settings
+                                (cityID, sourseID, saveDate)
+                           VALUES ('" + setObj.cityID.ToString() + "', '" + setObj.sourceID.ToString() + "', '" + DateTime.Now + "')";
+                command = new SQLiteCommand(sql, m_dbConnection);
+                command.ExecuteNonQuery();
+            }           
         }
 
         /// <summary>
@@ -63,7 +85,7 @@ namespace TheTime.DataAccessLevel
         {
             SettingsDataContext ret = new SettingsDataContext();
 
-            string sql = "SELECT * FROM 'settings' order by ID DESC  Limit 1;";
+            string sql = "SELECT * FROM 'settings' order by saveDate DESC  Limit 1;";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
 
@@ -204,6 +226,21 @@ namespace TheTime.DataAccessLevel
         /// <returns>объект класса Forecast</returns>
         public Forecast GetForecast(DateTime Current)
         {
+            SettingsDataContext sdc = GetSettings(); // получили текущие настройки
+
+            List<string> setID = new List<string>();
+
+            // получаем id всех настроек с похожими параметрами
+            string sql = "SELECT * FROM 'settings' WHERE cityID = '" + sdc.cityID + "' AND sourseID = '" + sdc.sourceID + "';";
+            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            foreach (DbDataRecord record in reader)
+            {
+                setID.Add(record["ID"].ToString());
+            }
+
+
             Forecast f = new Forecast();
 
             // вычисляем "текущий час"
@@ -244,12 +281,12 @@ namespace TheTime.DataAccessLevel
                     break;
             }
 
-            SettingsDataContext sdc = GetSettings(); // получили текущие настройки
+            
 
             // получаем прогноз на текущий момент
-            string sql = "SELECT * FROM 'hourly_forecasts' WHERE settingId = '" + sdc.ID + "' AND periodDate = '" + Current.Date.ToString() + "' AND periodTime = '" + CurHour + "' LIMIT 1;";
-            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
+            sql = "SELECT * FROM 'hourly_forecasts' WHERE settingId = '" + sdc.ID + "' AND periodDate = '" + Current.Date.ToString() + "' AND periodTime = '" + CurHour + "' LIMIT 1;";
+            command = new SQLiteCommand(sql, m_dbConnection);
+            reader = command.ExecuteReader();
 
             foreach (DbDataRecord record in reader)
             {
@@ -263,6 +300,8 @@ namespace TheTime.DataAccessLevel
             }
 
             // получаем прогноз на день
+            
+
             sql = "SELECT * FROM 'daily_forecasts' WHERE settingId = '" + sdc.ID + "' AND (periodDate = '" + Current.Date.ToString() + "' OR periodDate = '" + Current.AddDays(1).Date.ToString() + "' OR periodDate = '" + Current.AddDays(2).Date.ToString() + "' OR periodDate = '" + Current.AddDays(3).Date.ToString() + "' OR periodDate = '" + Current.AddDays(4).Date.ToString() + "' OR periodDate = '" + Current.AddDays(5).Date.ToString() + "' OR periodDate = '" + Current.AddDays(6).Date.ToString() + "' OR periodDate = '" + Current.AddDays(7).Date.ToString() + "' OR periodDate = '" + Current.AddDays(8).Date.ToString() + "' OR periodDate = '" + Current.AddDays(9).Date.ToString() + "' );";
             // должны получить 4 записи
             command = new SQLiteCommand(sql, m_dbConnection);

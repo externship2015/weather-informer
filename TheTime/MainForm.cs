@@ -43,8 +43,8 @@ namespace TheTime
             // sdc.cityID - id выбранного города
             // sdc.ID - id настройки
 
-            try
-            {
+            //try
+            //{
                 HttpWebRequest reqFP = (HttpWebRequest)HttpWebRequest.Create("http://www.google.com");
 
                 HttpWebResponse rspFP = (HttpWebResponse)reqFP.GetResponse();
@@ -118,28 +118,49 @@ namespace TheTime
                     return forecast;
 
                 }
-            }
-            catch (WebException)
-            {
-                // Ошибка, значит интернета у нас нет. Плачем :'(
-                MessageBox.Show("Невозможно подключиться к интернету, данные могут быть неточными");
+            //}
+            //catch (WebException)
+            //{
+            //    // Ошибка, значит интернета у нас нет. Плачем :'(
+            //    MessageBox.Show("Невозможно подключиться к интернету, данные могут быть неточными");
 
-                // получаем прогноз из базы по установленному в настройках серверу
+            //    // получаем прогноз из базы по установленному в настройках серверу
 
-                worker.SetConnect(path);
-                forecast = worker.GetForecast(DateTime.Now);
-                worker.CloseConnect();
+            //    worker.SetConnect(path);
+            //    forecast = worker.GetForecast(DateTime.Now);
+            //    worker.CloseConnect();
 
-                return forecast;
-            }
+            //    return forecast;
+            //}
         }
 
         #endregion
 
 
         #region Рисуем форму
+
+        void NoData()
+        {
+            label1.Text = "Нет данных";
+            label2.Text = "";
+            label3.Text = "";
+            label8.Text = "";
+            label9.Text = "";
+            label10.Text = "";
+            linkLabel2.Text = "";
+            dataGridView1.Visible = false;
+            dataGridView2.Visible = false;
+            label11.Visible = true;
+            label4.Visible = true;
+            label5.Visible = true;
+        }
+
         void GridView(DataAccessLevel.Forecast tag1)
         {
+            label4.Visible = false;
+            label5.Visible = false;
+            label11.Visible = false;
+            dataGridView1.Visible = true;
             //this.Invoke (new Action (dataGridView1.Rows.Clear));
             dataGridView1.Rows.Clear();
             dataGridView1.RowCount = tag1.hourlyList.Count;
@@ -168,7 +189,7 @@ namespace TheTime
 
         void GridView2 (DateTime Select_day)
         {
-            
+            dataGridView2.Visible = true;
             DataAccessLevel.Forecast tag1 = forecast;
             int day = Select_day.Day - tag1.hourlyList[0].periodDate.Day;
             dataGridView2.RowCount = 4;
@@ -182,7 +203,8 @@ namespace TheTime
                 dataGridView2.Rows[i].Height = 34;
                 dataGridView2.Rows[i].Cells[0].Value = tag1.dailyList[i + day * 4].timeOfDay;
                 dataGridView2.Rows[i].Cells[1].Value = tag1.dailyList[i + day * 4].temperature;
-                Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(tag1.dailyList[i + day * 4].symbol);
+                string buf = tag1.dailyList[i + day * 4].symbol.Replace("-", "0").Replace("+", "1");
+                Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(buf);
                 dataGridView2.Rows[i].Cells[2].Value = myIcon;
                 dataGridView2.Rows[i].Cells[3].Value = tag1.dailyList[i + day * 4].windSpeed;
                 dataGridView2.Rows[i].Cells[4].Value = tag1.dailyList[i + day * 4].pressure;
@@ -195,6 +217,10 @@ namespace TheTime
             dataGridView2.Height = total_height;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tag1"></param>
         void GroupTag(DataAccessLevel.Forecast tag1)
         {
             //this.Invoke(new Action(tabPage3.Controls.Clear));
@@ -246,6 +272,7 @@ namespace TheTime
                 tem[i * 2 + 1].Font = new Font("Modern No. 20", (float)10);
 
                 tb1[i] = new System.Windows.Forms.PictureBox();
+                
                 tb1[i].Location = new System.Drawing.Point(2, 28);
                 tb1[i].Name = "pictureboxes" + i.ToString();
                 tb1[i].Size = new System.Drawing.Size(28, 40);
@@ -293,22 +320,28 @@ namespace TheTime
 
         void RefreshForm(DataAccessLevel.Forecast forecast)
         {
-            try
-            {
-                CurWeather(forecast);
-                if (forecast.dailyList.Count > 0 && forecast.hourlyList.Count > 0 && forecast.tenDaysList.Count > 0)
-                // проверка заполненности списков
+            //try
+            //{
+                
+                //// проверка заполненности списков
+                if (forecast.dailyList.Count > 0 && forecast.hourlyList.Count > 0 && forecast.tenDaysList.Count > 0)                
                 {
+                    CurWeather(forecast);
+                    //NoData();
                     GridView(forecast);
                     GridView2(forecast.hourlyList[0].periodDate);
                     GroupTag(forecast);
                 }
-                else MessageBox.Show("Извините, нет данных. Требуется подключение к интернету");
-            }
-            catch (Exception ex)
-            { 
+                else
+                {
+                    MessageBox.Show("Извините, нет данных. Требуется подключение к интернету");
+                    NoData();
+                }
+            //}
+            //catch (Exception ex)
+            //{ 
             
-            }
+            //}
 
         }
 
@@ -339,20 +372,6 @@ namespace TheTime
             ////System.Threading.Timer timer = new System.Threading.Timer(tm, num, 0, 3600000);  
 
         }
-        
-        
-        
-        /// <summary>
-        ////Callback method for timer
-        /// </summary>
-        /// <param name="obj"></param>
-        /*public void Count(object obj)
-        {
-            //Вызывать методы запросов сервисов и записи в БД
-            forecast = GetForecat(Program.DBName);
-            RefreshForm(forecast);
-            //MessageBox.Show("hello");
-        }*/
 
         private void linkLabel1_Click(object sender, EventArgs e)
         {
@@ -460,7 +479,8 @@ namespace TheTime
             if (e.Button == MouseButtons.Right)
             {
                 notifyIcon1.ContextMenuStrip = contextMenuStrip1;
-                notifyIcon1.ContextMenuStrip.Show();
+                notifyIcon1.ContextMenuStrip.Show(Cursor.Position);
+               // notifyIcon1.ContextMenuStrip.Show();
             }
             else
             {
@@ -611,6 +631,13 @@ namespace TheTime
 
                 return forecast;
             }
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            forecast = GetForecat(Program.DBName, progressBar1);
+
+            RefreshForm(forecast);
         }
 
 

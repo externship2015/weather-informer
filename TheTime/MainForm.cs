@@ -560,6 +560,8 @@ namespace TheTime
 
                     DataAccessLevel.Forecast yandexForecast = new DataAccessLevel.Forecast();
 
+                   // DataAccessLevel.CurrentWeather yaCurWeather = new DataAccessLevel.CurrentWeather();
+
                     switch (sdc.sourceID)
                     {
                         case 1: // owm 
@@ -587,7 +589,9 @@ namespace TheTime
                             worker.SaveForecast(yandexForecast, pb);
                             worker.CloseConnect();
                             //break;
+                            //yaCurWeather = yandexForecast.curWeather;
                             return yandexForecast;
+                            //break;
                         default:
                             break;
                     }
@@ -602,6 +606,8 @@ namespace TheTime
                     forecast = worker.GetForecast(CurDate);
                     worker.CloseConnect();
 
+                   // if (sdc.sourceID == 2)
+                    //    forecast.curWeather = yaCurWeather;
 
                     return forecast;
 

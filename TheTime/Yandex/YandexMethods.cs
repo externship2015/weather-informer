@@ -114,13 +114,16 @@ namespace TheTime.Yandex
                                 if (node3.Name == "image-v3")
                                     symbol = node3.InnerText;
                             }
-                            ListHours.Add(new HourlyForecastsDataContext
+                            if (time_of_day == "0" || time_of_day == "3" || time_of_day == "6" || time_of_day == "9" || time_of_day == "12" || time_of_day == "15" || time_of_day == "18" || time_of_day == "21")
                             {
-                                periodDate = Convert.ToDateTime(f_date).Date,
-                                symbol = symbol,
-                                temperature = temperature,
-                                periodTime = Convert.ToInt16(time_of_day)
-                            });
+                                ListHours.Add(new HourlyForecastsDataContext
+                                {
+                                    periodDate = Convert.ToDateTime(f_date).Date,
+                                    symbol = symbol,
+                                    temperature = temperature,
+                                    periodTime = Convert.ToInt16(time_of_day)
+                                });
+                            }
                         }
                     }
 

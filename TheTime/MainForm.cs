@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using TheTime.OpenWeatherMap;
+using System.Windows;
 
 namespace TheTime
 {
@@ -199,7 +200,15 @@ namespace TheTime
         {
             dataGridView2.Visible = true;
             DataAccessLevel.Forecast tag1 = forecast;
-            int day = Select_day.Day - tag1.hourlyList[0].periodDate.Day;
+            
+            int day = Select_day.DayOfYear - tag1.hourlyList[0].periodDate.DayOfYear;
+                if (day < 0)
+                {
+                    if (tag1.hourlyList[0].periodDate.Year % 4 == 0)
+                        day = (366 - tag1.hourlyList[0].periodDate.DayOfYear) + Select_day.DayOfYear;
+                    else
+                        day = (365 - tag1.hourlyList[0].periodDate.DayOfYear) + Select_day.DayOfYear;
+                }
             dataGridView2.RowCount = 4;
             monthCalendar1.MaxDate = monthCalendar1.TodayDate.AddDays(tag1.tenDaysList.Count() / 2 - 1);
             //MessageBox.Show(Convert.ToString(day));
@@ -260,7 +269,9 @@ namespace TheTime
                 tb[i].Size = new System.Drawing.Size(75, 77);
                 tb[i].TabIndex = i;
                 tb[i].Text = DateTime.Parse(Convert.ToString(tag1.tenDaysList[i * 2].periodDate)).ToShortDateString();
-                
+                tb[i].Click += new EventHandler(groupBox2_Enter); //RoutedEventHandler(groupBox2_Enter);
+                tb[i].Cursor = Cursors.Hand;
+
                 mor[i * 2].Text = "День";
                 mor[i * 2].Location = new System.Drawing.Point(30, 16);
                 mor[i * 2].Size = new System.Drawing.Size(34, 13);
@@ -288,7 +299,13 @@ namespace TheTime
                 Image myIcon = (Image)TheTime.Properties.Resources.ResourceManager.GetObject(buf);
                 tb1[i].Image = myIcon;
                 tb1[i].SizeMode = PictureBoxSizeMode.StretchImage;
-
+                
+            /*    tb1[i].Click += new EventHandler(groupBox2_Enter);
+                tem[i*2].Click += new EventHandler(groupBox2_Enter);
+                tem[i*2+1].Click += new EventHandler(groupBox2_Enter);
+                mor[i*2].Click += new EventHandler(groupBox2_Enter);
+                mor[i*2+1].Click += new EventHandler(groupBox2_Enter);
+              */  
                 tabPage3.Controls.Add(tb[i]);
                 tb[i].Controls.Add(tem[i * 2]);
                 tb[i].Controls.Add(tem[i * 2 + 1]);
@@ -644,6 +661,17 @@ namespace TheTime
             tabControl1.Visible = true;
             groupBox1.Visible = true;
             this.ControlBox = true;
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+            linkLabel2.Text = DateTime.Parse(Convert.ToString(((GroupBox)sender).Text)).ToLongDateString();
+            GridView2(Convert.ToDateTime(((GroupBox)sender).Text));
+            tabControl1.SelectTab(tabPage2);
+           
+           // GridView2();
+//            MessageBox.Show(Convert.ToString(sender));
+            
         }
 
 

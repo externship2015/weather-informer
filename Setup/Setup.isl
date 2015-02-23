@@ -1902,7 +1902,6 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>database.db</td><td>ISX_DEFAULTCOMPONENT</td><td>Database.db</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\Database.db</td><td>1</td><td/></row>
 		<row><td>database.db1</td><td>ISX_DEFAULTCOMPONENT3</td><td>Database.db</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\Database.db</td><td>1</td><td/></row>
 		<row><td>database.db2</td><td>ISX_DEFAULTCOMPONENT4</td><td>Database.db</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\Database.db</td><td>1</td><td/></row>
 		<row><td>sqlite.interop.dll</td><td>SQLite.Interop.dll</td><td>SQLITE~1.DLL|SQLite.Interop.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\x64\SQLite.Interop.dll</td><td>1</td><td/></row>

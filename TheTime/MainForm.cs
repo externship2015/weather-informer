@@ -15,9 +15,9 @@ namespace TheTime
     public partial class MainForm : Form
 
     {
-        string CurIcon = "_01d";
-        string CurTemp = "5";
-        string CurDesc = "солнечно";
+        string CurIcon = "connect";
+        string CurTemp = "";
+        string CurDesc = "нет данных";
 
 
         DataAccessLevel.Forecast forecast = new DataAccessLevel.Forecast();
@@ -43,8 +43,8 @@ namespace TheTime
             // sdc.cityID - id выбранного города
             // sdc.ID - id настройки
 
-            //try
-            //{
+            try
+            {
                 HttpWebRequest reqFP = (HttpWebRequest)HttpWebRequest.Create("http://www.google.com");
 
                 HttpWebResponse rspFP = (HttpWebResponse)reqFP.GetResponse();
@@ -118,20 +118,20 @@ namespace TheTime
                     return forecast;
 
                 }
-            //}
-            //catch (WebException)
-            //{
-            //    // Ошибка, значит интернета у нас нет. Плачем :'(
-            //    MessageBox.Show("Невозможно подключиться к интернету, данные могут быть неточными");
+            }
+            catch (WebException)
+            {
+                // Ошибка, значит интернета у нас нет. Плачем :'(
+                MessageBox.Show("Невозможно подключиться к интернету, данные могут быть неточными");
 
-            //    // получаем прогноз из базы по установленному в настройках серверу
+                // получаем прогноз из базы по установленному в настройках серверу
 
-            //    worker.SetConnect(path);
-            //    forecast = worker.GetForecast(DateTime.Now);
-            //    worker.CloseConnect();
+                worker.SetConnect(path);
+                forecast = worker.GetForecast(DateTime.Now);
+                worker.CloseConnect();
 
-            //    return forecast;
-            //}
+                return forecast;
+            }
         }
 
         #endregion
@@ -141,6 +141,8 @@ namespace TheTime
 
         void NoData()
         {
+           
+            tabPage3.Controls.Clear();
             label1.Text = "Нет данных";
             label2.Text = "";
             label3.Text = "";
@@ -153,6 +155,11 @@ namespace TheTime
             label11.Visible = true;
             label4.Visible = true;
             label5.Visible = true;
+            CurIcon = "connect";
+            CurTemp = "";
+            CurDesc = "нет данных";
+
+            pictureBox1.Visible = false; 
         }
 
         void GridView(DataAccessLevel.Forecast tag1)
@@ -161,6 +168,7 @@ namespace TheTime
             label5.Visible = false;
             label11.Visible = false;
             dataGridView1.Visible = true;
+            pictureBox1.Visible = true;
             //this.Invoke (new Action (dataGridView1.Rows.Clear));
             dataGridView1.Rows.Clear();
             dataGridView1.RowCount = tag1.hourlyList.Count;
@@ -355,22 +363,6 @@ namespace TheTime
             tabControl1.Visible=false;
             groupBox1.Visible=false;
             this.ControlBox = false;
-
-            //forecast = GetForecat(Program.DBName);
-            //RefreshForm(forecast);
-
-            ////-----Сворачиваем форму при запуске в трей----
-            //this.WindowState = FormWindowState.Minimized;
-            //DeactivateForm();                       
-            
-            
-            ////------------вешаем ТАЙМЕР------------- 
-            //int num = 1; //
-            //timer1.Enabled = true;
-            ////TimerCallback tm = new TimerCallback(Count);
-            //// раз в час
-            ////System.Threading.Timer timer = new System.Threading.Timer(tm, num, 0, 3600000);  
-
         }
 
         private void linkLabel1_Click(object sender, EventArgs e)
@@ -480,7 +472,6 @@ namespace TheTime
             {
                 notifyIcon1.ContextMenuStrip = contextMenuStrip1;
                 notifyIcon1.ContextMenuStrip.Show(Cursor.Position);
-               // notifyIcon1.ContextMenuStrip.Show();
             }
             else
             {
@@ -495,8 +486,6 @@ namespace TheTime
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //int i = Convert.ToInt16(textBox1.Text);
-            //textBox1.Text = Convert.ToString(i + 1);
             forecast = GetForecat(Program.DBName);
             RefreshForm(forecast);
             timer1.Enabled = true;
@@ -635,9 +624,26 @@ namespace TheTime
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+
+        }
+
+        private void linkLabel3_Click(object sender, EventArgs e)
+        {
+
+            this.Size = new System.Drawing.Size(676, 91);
+            progressBar1.Visible = true;
+            tabControl1.Visible = false;
+            groupBox1.Visible = false;
+            this.ControlBox = false;
             forecast = GetForecat(Program.DBName, progressBar1);
 
             RefreshForm(forecast);
+
+            this.Size = new System.Drawing.Size(676, 331);
+            progressBar1.Visible = false;
+            tabControl1.Visible = true;
+            groupBox1.Visible = true;
+            this.ControlBox = true;
         }
 
 

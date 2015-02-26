@@ -1059,6 +1059,7 @@
 	<table name="CreateFolder">
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
+		<row><td>CommonFilesFolder</td><td>ISX_DEFAULTCOMPONENT4</td></row>
 		<row><td>X64</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>X86</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 	</table>
@@ -1902,8 +1903,7 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>database.db1</td><td>ISX_DEFAULTCOMPONENT3</td><td>Database.db</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\Database.db</td><td>1</td><td/></row>
-		<row><td>database.db2</td><td>ISX_DEFAULTCOMPONENT4</td><td>Database.db</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\Database.db</td><td>1</td><td/></row>
+		<row><td>database.db</td><td>ISX_DEFAULTCOMPONENT3</td><td>Database.db</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\Для установки\Database.db</td><td>1</td><td/></row>
 		<row><td>sqlite.interop.dll</td><td>SQLite.Interop.dll</td><td>SQLITE~1.DLL|SQLite.Interop.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\x64\SQLite.Interop.dll</td><td>1</td><td/></row>
 		<row><td>sqlite.interop.dll1</td><td>SQLite.Interop.dll1</td><td>SQLITE~1.DLL|SQLite.Interop.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\x86\SQLite.Interop.dll</td><td>1</td><td/></row>
 		<row><td>system.data.sqlite.dll</td><td>System.Data.SQLite.dll</td><td>SYSTEM~1.DLL|System.Data.SQLite.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Diplom\TheTime\TheTime\bin\Debug\System.Data.SQLite.dll</td><td>1</td><td/></row>

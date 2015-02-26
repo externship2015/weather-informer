@@ -19,6 +19,9 @@ namespace TheTime
         string CurIcon = "connect";
         string CurTemp = "";
         string CurDesc = "нет данных";
+        string CurCity = "";
+
+        DateTime CurData;
 
 
         DataAccessLevel.Forecast forecast = new DataAccessLevel.Forecast();
@@ -362,6 +365,9 @@ namespace TheTime
                     MessageBox.Show("Извините, нет данных. Требуется подключение к интернету");
                     NoData();
                 }
+
+                label7.Text = "Последнее обновление: \r\n" + CurData.ToString();
+                label6.Text = CurCity;
             //}
             //catch (Exception ex)
             //{ 
@@ -375,7 +381,7 @@ namespace TheTime
             
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.Size = new System.Drawing.Size(676, 91);
+            this.Size = new System.Drawing.Size(749, 91);
             progressBar1.Visible = true;
             tabControl1.Visible=false;
             groupBox1.Visible=false;
@@ -388,7 +394,7 @@ namespace TheTime
             if (form.ShowDialog() == DialogResult.OK)
 
             {
-                this.Size = new System.Drawing.Size(676, 91);
+                this.Size = new System.Drawing.Size(749, 91);
                 progressBar1.Visible = true;
                 tabControl1.Visible = false;
                 groupBox1.Visible = false;
@@ -397,7 +403,7 @@ namespace TheTime
 
                 RefreshForm(forecast);
 
-                this.Size = new System.Drawing.Size(676, 331);
+                this.Size = new System.Drawing.Size(749, 356);
                 progressBar1.Visible = false;
                 tabControl1.Visible = true;
                 groupBox1.Visible = true;
@@ -513,7 +519,7 @@ namespace TheTime
         {
             forecast = GetForecat(Program.DBName,progressBar1);
 
-            this.Size = new System.Drawing.Size(676, 331);
+            this.Size = new System.Drawing.Size(749, 356);
             progressBar1.Visible = false;
             tabControl1.Visible = true;
             groupBox1.Visible = true;
@@ -542,8 +548,13 @@ namespace TheTime
             // получаем текущий город из настроек
 
             worker.SetConnect(path);
-            DataAccessLevel.SettingsDataContext sdc = worker.GetSettings(); // настройки
+            DataAccessLevel.SettingsDataContext sdc = worker.GetSettings(); // текущие настройки
+            DataAccessLevel.SettingsDataContext altSet = worker.GetAltSetStr(sdc);
+            CurCity = worker.GetCurCityName(sdc.cityID.ToString());
             worker.CloseConnect();
+
+            // CurCity
+
 
             // sdc.cityID - id выбранного города
             // sdc.ID - id настройки
@@ -559,63 +570,118 @@ namespace TheTime
                     rspFP.Close();
 
                     DataAccessLevel.Forecast yandexForecast = new DataAccessLevel.Forecast();
+                    DataAccessLevel.Forecast owmForecast = new DataAccessLevel.Forecast();
 
-                   // DataAccessLevel.CurrentWeather yaCurWeather = new DataAccessLevel.CurrentWeather();
-
-                    switch (sdc.sourceID)
-                    {
-                        case 1: // owm 
-                            // получаем город по ид яндекса GetCityByYaId
-                            worker.SetConnect(path);
-                            DataAccessLevel.CitiesDataContext city = worker.GetCityByYaId(sdc.cityID.ToString());
-                            worker.CloseConnect();
-                            // получаем прогноз owm по названию или owmid
-                            OpenWeatherMap.APIWorker owmworker = new APIWorker();
-                            DataAccessLevel.Forecast owmForecast = owmworker.GetWeather(city.name, city.owmID);
-
-                            // сохраняем в базу
-                            worker.SetConnect(path);
-                            worker.SaveForecast(owmForecast, pb);
-                            worker.CloseConnect();
-
-                            break;
-                        case 2: // яндекс
-                            // получаем прогноз с яндекса (по ID города яндекса)                    
-                            Yandex.YandexMethods yaworker = new Yandex.YandexMethods();
-                            yaworker.GetYandexForecast(sdc.cityID.ToString(), yandexForecast);
-
-                            // сохраняем в базу
-                            worker.SetConnect(path);
-                            worker.SaveForecast(yandexForecast, pb);
-                            worker.CloseConnect();
-                            //break;
-                            //yaCurWeather = yandexForecast.curWeather;
-                            return yandexForecast;
-                            //break;
-                        default:
-                            break;
-                    }
-
+                    // DataAccessLevel.CurrentWeather yaCurWeather = new DataAccessLevel.CurrentWeather();
                     // получаем текущее время - нужен id текущий города на яндексе
                     Date_Time.GetTime getter = new Date_Time.GetTime();
                     DateTime CurDate = getter.Yandex_Time(sdc.cityID);
 
-                    // получаем прогноз из базы по установленному в настройках серверу
+                    CurData = CurDate;
+
+                    // получаем город по ид яндекса GetCityByYaId
+                    worker.SetConnect(path);
+                    DataAccessLevel.CitiesDataContext city = worker.GetCityByYaId(sdc.cityID.ToString());
+                    worker.CloseConnect();
+
+                    // получаем прогнозы
+                    // получаем прогноз с яндекса
+                    Yandex.YandexMethods yaworker2 = new Yandex.YandexMethods();
+                    yaworker2.GetYandexForecast(sdc.cityID.ToString(), yandexForecast);
+                    // с owm
+                    OpenWeatherMap.APIWorker owmworker = new APIWorker();
+                    owmForecast = owmworker.GetWeather(city.name, city.owmID);
+
+                    switch (sdc.sourceID)
+                    { 
+                        case 1:
+                            // owm
+                            worker.SetConnect(path);
+                            worker.SaveForecast(owmForecast, pb, sdc);
+                            worker.SaveForecast(yandexForecast, pb, altSet);
+                            worker.CloseConnect();
+                            break;
+                        case 2: 
+                            // ya
+                            worker.SetConnect(path);
+                            worker.SaveForecast(owmForecast, pb, altSet);
+                            worker.SaveForecast(yandexForecast, pb, sdc);
+                            worker.CloseConnect();
+                            return yandexForecast;
+                            
+                    }
 
                     worker.SetConnect(path);
                     forecast = worker.GetForecast(CurDate);
                     worker.CloseConnect();
 
-                   // if (sdc.sourceID == 2)
+                    // if (sdc.sourceID == 2)
                     //    forecast.curWeather = yaCurWeather;
 
                     return forecast;
+
+
+                   // switch (sdc.sourceID)
+                   // {
+                   //     case 1: // owm 
+                   //         // получаем город по ид яндекса GetCityByYaId
+                   //         worker.SetConnect(path);
+                   //         DataAccessLevel.CitiesDataContext city = worker.GetCityByYaId(sdc.cityID.ToString());
+                   //         worker.CloseConnect();
+                   //         // получаем прогноз owm по названию или owmid
+                   //         OpenWeatherMap.APIWorker owmworker = new APIWorker();
+                   //         DataAccessLevel.Forecast owmForecast = owmworker.GetWeather(city.name, city.owmID);
+
+                   //         // получаем прогноз с яндекса
+                   //         Yandex.YandexMethods yaworker2 = new Yandex.YandexMethods();
+                   //         yaworker2.GetYandexForecast(sdc.cityID.ToString(), yandexForecast);
+
+                   //         // сохраняем в базу
+                   //         worker.SetConnect(path);
+                   //         worker.SaveForecast(yandexForecast, pb, altSet);
+                   //         worker.CloseConnect();
+
+                   //         // сохраняем в базу
+                   //         worker.SetConnect(path);
+                   //         worker.SaveForecast(owmForecast, pb);
+                   //         worker.CloseConnect();
+
+                   //         break;
+                   //     case 2: // яндекс
+                   //         // получаем прогноз с яндекса (по ID города яндекса)                    
+                   //         Yandex.YandexMethods yaworker = new Yandex.YandexMethods();
+                   //         yaworker.GetYandexForecast(sdc.cityID.ToString(), yandexForecast);
+
+                   //         // сохраняем в базу
+                   //         worker.SetConnect(path);
+                   //         worker.SaveForecast(yandexForecast, pb);
+                   //         worker.CloseConnect();
+                   //         //break;
+                   //         //yaCurWeather = yandexForecast.curWeather;
+                   //         return yandexForecast;
+                   //         //break;
+                   //     default:
+                   //         break;
+                   // }
+
+                   
+                   // // получаем прогноз из базы по установленному в настройках серверу
+
+                   // worker.SetConnect(path);
+                   // forecast = worker.GetForecast(CurDate);
+                   // worker.CloseConnect();
+
+                   //// if (sdc.sourceID == 2)
+                   // //    forecast.curWeather = yaCurWeather;
+
+                   // return forecast;
 
                 }
 
 
                 else
                 {
+                    CurData = DateTime.Now;
                     // сервер вернул отрицательный ответ, возможно что инета нет
                     rspFP.Close();
                     MessageBox.Show("Подключение к интернету ограничено, данные могут быть неточными");
@@ -632,6 +698,7 @@ namespace TheTime
             }
             catch (WebException)
             {
+                CurData = DateTime.Now;
                 // Ошибка, значит интернета у нас нет. Плачем :'(
                 MessageBox.Show("Невозможно подключиться к интернету, данные могут быть неточными");
 
@@ -653,7 +720,7 @@ namespace TheTime
         private void linkLabel3_Click(object sender, EventArgs e)
         {
 
-            this.Size = new System.Drawing.Size(676, 91);
+            this.Size = new System.Drawing.Size(749, 91);
             progressBar1.Visible = true;
             tabControl1.Visible = false;
             groupBox1.Visible = false;
@@ -662,7 +729,7 @@ namespace TheTime
 
             RefreshForm(forecast);
 
-            this.Size = new System.Drawing.Size(676, 331);
+            this.Size = new System.Drawing.Size(749, 356);
             progressBar1.Visible = false;
             tabControl1.Visible = true;
             groupBox1.Visible = true;
@@ -678,6 +745,21 @@ namespace TheTime
            // GridView2();
 //            MessageBox.Show(Convert.ToString(sender));
             
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
 
 

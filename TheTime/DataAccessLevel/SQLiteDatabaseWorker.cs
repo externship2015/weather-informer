@@ -453,10 +453,10 @@ namespace TheTime.DataAccessLevel
         #endregion
 
 
-        public void SaveForecast(Forecast forecast, ProgressBar pb)
+        public void SaveForecast(Forecast forecast, ProgressBar pb, SettingsDataContext set)
         {
             // получаем текущий SettingID
-            SettingsDataContext set = GetSettings();
+           // SettingsDataContext set = GetSettings();
 
             // для каждого  public List<HourlyForecastsDataContext> hourlyList { get; set; } - проверяем и обновляем / переписываем
             #region
@@ -568,6 +568,68 @@ namespace TheTime.DataAccessLevel
             }
             #endregion
 
+        }
+
+        public string GetCurCityName(string id)
+        {
+            string name = "";
+            string sql = "select * from cities WHERE yandexID = '" + id + "'";
+            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            foreach (DbDataRecord record in reader)
+            {
+                name = record["name"].ToString();
+            }
+
+            return name;
+        }
+
+        public SettingsDataContext GetAltSetStr(SettingsDataContext curSet)
+        {
+            SettingsDataContext altSet = new SettingsDataContext();
+
+            // пробуем получить альтернативную настройку
+            string sql = "SELECT * FROM 'settings' WHERE cityID = '" + curSet.cityID + "' AND sourseID <> '" + curSet.sourceID + "' ";
+            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            int count = 0;
+            foreach (DbDataRecord record in reader)
+            {
+                count++;
+                altSet.cityID = int.Parse(record["cityID"].ToString());
+                altSet.ID = int.Parse(record["ID"].ToString());
+                altSet.saveDate = DateTime.Parse(record["saveDate"].ToString());
+                altSet.sourceID = int.Parse(record["sourseID"].ToString());
+            }
+
+            if (count > 0)
+                return altSet;
+            else 
+            {
+                int sID = 1;
+                if (curSet.sourceID == 1)
+                    sID = 2;
+                else sID = 1;
+                // если такой строки настроек нет, то добавляем ее
+                sql = @"INSERT INTO settings
+                                (cityID, sourseID, saveDate)
+                           VALUES ('" + curSet.cityID + "', '" + sID + "', '" + DateTime.Now.AddYears(-1)  + "')";
+                command = new SQLiteCommand(sql, m_dbConnection);
+                command.ExecuteNonQuery();
+
+                sql = "SELECT * FROM 'settings' WHERE cityID = '" + curSet.cityID + "' AND sourseID <> '" + curSet.sourceID + "' ";
+                command = new SQLiteCommand(sql, m_dbConnection);
+                reader = command.ExecuteReader();                
+                foreach (DbDataRecord record in reader)
+                {
+                    altSet.cityID = int.Parse(record["cityID"].ToString());
+                    altSet.ID = int.Parse(record["ID"].ToString());
+                    altSet.saveDate = DateTime.Parse(record["saveDate"].ToString());
+                    altSet.sourceID = int.Parse(record["sourseID"].ToString());
+                }
+            }
+            return altSet;
         }
     }
 }

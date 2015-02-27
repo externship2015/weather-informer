@@ -41,11 +41,11 @@ namespace TheTime.DataAccessLevel
         private void button3_Click(object sender, EventArgs e)
         {
             SettingsDataContext sdc = new SettingsDataContext();
-            //sdc.cityID = 27786;
-            //sdc.sourceID = 1;
+            sdc.cityID = 27786;
+            sdc.sourceID = 1;
             
-            sdc.cityID = 12345;
-            sdc.sourceID = 7;
+            //sdc.cityID = 12345;
+            //sdc.sourceID = 7;
              
 
 

@@ -68,7 +68,7 @@ namespace TheTime.DataAccessLevel
                 command.CommandText = @"CREATE TABLE [hourly_forecasts] (
                                     [ID]             integer          PRIMARY KEY NOT NULL,
                                     [settingID]      integer          NOT NULL,
-                                    [periodDate]     varchar(200)     NOT NULL, 
+                                    [periodDate]     date             NOT NULL, 
                                     [periodTime]     integer          NOT NULL,
                                     [description]    varchar(200)     NOT NULL,
                                     [temperature]    varchar(10)      NOT NULL,
@@ -83,7 +83,7 @@ namespace TheTime.DataAccessLevel
                 command.CommandText = @"CREATE TABLE [daily_forecasts] (
                                     [ID]             integer          PRIMARY KEY NOT NULL,
                                     [settingID]      integer          NOT NULL,
-                                    [periodDate]     varchar(200)     NOT NULL, 
+                                    [periodDate]     date             NOT NULL, 
                                     [timeOfDay]      varchar(10)      NOT NULL,                                   
                                     [description]    varchar(200)     NOT NULL,
                                     [temperature]    varchar(10)      NOT NULL,
@@ -98,7 +98,7 @@ namespace TheTime.DataAccessLevel
                 command.CommandText = @"CREATE TABLE [ten_days_forecasts] (
                                     [ID]             integer          PRIMARY KEY NOT NULL,
                                     [settingID]      integer          NOT NULL,
-                                    [periodDate]     varchar(200)     NOT NULL, 
+                                    [periodDate]     date             NOT NULL, 
                                     [timeOfDay]      varchar(10)      NOT NULL, 
                                     [temperature]    varchar(10)      NOT NULL,
                                     [symbol]         varchar(20)      NOT NULL                    
